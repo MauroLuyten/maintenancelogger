@@ -1,0 +1,55 @@
+/** Stylus Styles */
+@import '../../node_modules/vuetify/src/stylus/main'
+
+.dialog {
+    margin: 0px
+}
+.carousel{
+    overflow: visible
+}
+/* .dialog__container{
+    position: inherit 
+    top: -36px
+    right: 36px
+} */
+
+/* #accountmenu, #accountmenu button{
+    height: 100%
+    margin: 0
+    padding: 0
+}
+
+#accountmenu .menu__activator{
+    height: 100%
+} */
+@media(max-width:600px){
+    .carousel{
+        height:150px
+    }
+    .stepper--vertical .stepper__content{
+        margin: 0;
+        padding-left: 0
+        padding-right: 0
+    }
+    th, td{
+        padding: 0 9px !important
+    }
+    /* #accountmenu, #accountmenu button{
+        height: auto
+        margin: 0
+        padding: 0
+    }
+    #accountmenu .menu__activator{
+        height: auto
+    }       */
+}
+@media (min-width:600px){
+    #accountmenu, #accountmenu button{
+        height: 100%
+        margin: 0
+        padding: 0
+}
+    #accountmenu .menu__activator{
+        height: 100%
+    }
+}
