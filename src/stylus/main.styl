@@ -7,12 +7,17 @@
 .carousel{
     overflow: visible
 }
-/* .dialog__container{
-    position: inherit 
-    top: -36px
-    right: 36px
-} */
 
+.card__media, .card__media__content{
+  overflow: visible
+}
+.card__media__content .dialog__container {
+    position: absolute
+    bottom: -28px
+    right: 28px
+    z-index: 2
+
+}
 /* #accountmenu, #accountmenu button{
     height: 100%
     margin: 0
@@ -34,6 +39,7 @@
     th, td{
         padding: 0 9px !important
     }
+    
     /* #accountmenu, #accountmenu button{
         height: auto
         margin: 0
