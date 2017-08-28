@@ -6,7 +6,7 @@
           <h1 class="display-1 ma-1">Your Vehicles</h1>
           <v-spacer class="hidden-sm-and-up"></v-spacer>
           <v-dialog v-model="addvehicledialog" width="900" class="ma-0 pa-0">
-            <v-btn fab small class="blue-grey" dark slot="activator" v-tooltip:bottom="{html:'Add a Vehicle'}">
+            <v-btn fab medium fixed bottom right class="blue-grey fixed_fab" dark slot="activator" v-tooltip:top="{html:'Add a Vehicle'}" >
               <v-icon>add</v-icon>
             </v-btn>
             <v-stepper v-model="addvehiclecurrentstep" vertical class="elevation-1 white">

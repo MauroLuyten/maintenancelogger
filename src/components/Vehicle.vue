@@ -2,42 +2,38 @@
   <v-container fluid class="pl-2 pr-2 pt-2">
     <v-layout justify-center>
       <v-flex xs12 md9 lg7 xl4 class="mt-3">
-        <v-card>
-          <v-card-media >
+        <v-card id="vehicle_page_card">
+          <v-card-media>
             <img :src="vehicle.imgurl" alt="">
-              <v-dialog v-model="addmaintenancedialog">
-                <v-btn fab medium class="blue-grey overlayed_fab" dark slot="activator" v-tooltip:right="{html:'Add a Maintenance'}">
-                  <v-icon>add</v-icon>
-                </v-btn>
-                <v-card>
-                  <v-progress-linear indeterminate :active="addmaintenanceloading"></v-progress-linear>
-                  <v-card-title>
-                    <h2 class="headline">Add maintenance</h2>
-                  </v-card-title>
-                  <v-card-text>
-                    <v-menu full-width>
-                      <v-text-field slot="activator" label="Date" v-model="newMaintenance.date" append-icon="event" required></v-text-field>
-                      <v-date-picker v-model="newMaintenance.date"></v-date-picker>
-                    </v-menu>
-                    <v-text-field label="Description" append-icon="description" v-model="newMaintenance.description" multi-line required></v-text-field>
-                    <v-text-field label="Kilometers (km)" type="number" v-model="newMaintenance.kilometers" required></v-text-field>
-                    <v-text-field label="Cost (€)" type="number" v-model="newMaintenance.cost" required></v-text-field>
-                  </v-card-text>
-                  <v-card-actions>
-                    <v-layout row justify-space-between>
-                      <v-btn class="blue--text darken-1" flat @click.native="closeDialogs()">Close</v-btn>
-                      <v-btn class="blue--text darken-1" flat @click.native="addMaintenance()">Save</v-btn>
-                    </v-layout>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
+            <v-dialog v-model="addmaintenancedialog">
+              <v-btn fab medium class="blue-grey overlayed_fab" dark slot="activator" v-tooltip:top="{html:'Add a Maintenance'}">
+                <v-icon>add</v-icon>
+              </v-btn>
+              <v-card>
+                <v-progress-linear indeterminate :active="addmaintenanceloading"></v-progress-linear>
+                <v-card-title>
+                  <h2 class="headline">Add maintenance</h2>
+                </v-card-title>
+                <v-card-text>
+                  <v-menu full-width>
+                    <v-text-field slot="activator" label="Date" v-model="newMaintenance.date" append-icon="event" required></v-text-field>
+                    <v-date-picker v-model="newMaintenance.date"></v-date-picker>
+                  </v-menu>
+                  <v-text-field label="Description" append-icon="description" v-model="newMaintenance.description" multi-line required></v-text-field>
+                  <v-text-field label="Kilometers (km)" type="number" v-model="newMaintenance.kilometers" required></v-text-field>
+                  <v-text-field label="Cost (€)" type="number" v-model="newMaintenance.cost" required></v-text-field>
+                </v-card-text>
+                <v-card-actions>
+                  <v-layout row justify-space-between>
+                    <v-btn class="blue--text darken-1" flat @click.native="closeDialogs()">Close</v-btn>
+                    <v-btn class="blue--text darken-1" flat @click.native="addMaintenance()">Save</v-btn>
+                  </v-layout>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
           </v-card-media>
           <v-card-title>
-            
-              <h3>{{vehicle.model}}</h3>
-              
-
-            
+            <h3>{{vehicle.model}}</h3>
           </v-card-title>
           <v-card-text class="ma-0 pa-0">
             <v-expansion-panel class="elevation-0 " expand>
