@@ -5,7 +5,7 @@
         <v-layout row>
           <h1 class="display-1 ma-1">Your Vehicles</h1>
           <v-spacer class="hidden-sm-and-up"></v-spacer>
-          <v-dialog v-model="addvehicledialog" width="900" class="ma-0 pa-0">
+          <v-dialog v-model="addvehicledialog" width="900" class="ma-0 pa-0" lazy>
             <v-btn fab medium fixed bottom right class="blue-grey fixed_fab" dark slot="activator" v-tooltip:top="{html:'Add a Vehicle'}" >
               <v-icon>add</v-icon>
             </v-btn>
@@ -20,7 +20,7 @@
                     <h2 class="headline">Add vehicle</h2>
                   </v-card-title>
                   <v-card-text>
-                    <v-text-field label="Vehicle Model" required v-model="newVehicle.model"></v-text-field>
+                    <v-text-field @keyup.enter="showSuggestedImages()" label="Vehicle Model" required v-model="newVehicle.model"></v-text-field>
                   </v-card-text>
                   <v-card-actions>
                     <v-btn class="blue--text darken-1" flat @click.native="closeDialogs()">Close</v-btn>
@@ -49,7 +49,7 @@
                   </v-card-text>
                   <v-card-actions>
                     <v-btn class="blue--text darken-1" flat @click.native="closeDialogs()">Cancel</v-btn>
-                    <v-btn class="white--text blue darken-1" raised @click.native="addVehicle()">Confirm</v-btn>
+                    <v-btn class="white--text blue darken-1" raised @click.native="addVehicle()" :disabled="selectedimage==''">Confirm</v-btn>
                   </v-card-actions>
                 </v-card>
               </v-stepper-content>
@@ -232,6 +232,7 @@ export default {
       this.addvehicleloading = false
       this.imageselectiondialog = false
       this.addvehiclecurrentstep = 1
+      this.selectedimage=''
     },
     resetSelectedVehicle: function() {
       this.selectedVehicle.model = ''
