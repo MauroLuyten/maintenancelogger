@@ -66,7 +66,7 @@
 
 import Firebase from 'firebase'
 import Axios from 'axios'
-import { database } from './firebase-config'
+
 
 
 

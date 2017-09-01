@@ -40,25 +40,22 @@
                   <v-card-text>
                     <p>Please
                       <b>click</b> on the image you would like to be used:</p>
-
                     <v-carousel dark cycle ref="suggestedcarousel">
                       <v-carousel-item v-for="(item,index) in suggestedimages" :key="item.link" :src="item.link" v-badge="isSelectedImage(item.link)" @click.native="selectImage(item.link, index)" style="cursor:pointer;">
                       </v-carousel-item>
                     </v-carousel>
-
                   </v-card-text>
                   <v-card-actions>
                     <v-btn class="blue--text darken-1" flat @click.native="closeDialogs()">Cancel</v-btn>
-                    <v-btn class="white--text blue darken-1" raised @click.native="addVehicle()" :disabled="selectedimage==''">Confirm</v-btn>
+                    <v-btn class="white--text blue darken-1" raised @click.native="addVehicle()" >Confirm</v-btn>
                   </v-card-actions>
                 </v-card>
               </v-stepper-content>
             </v-stepper>
           </v-dialog>
         </v-layout>
-
         <v-layout row justify-start wrap>
-          <template v-for="(vehicle,key,index) in user.vehicles">
+          <template v-for="(vehicle,key) in vehicles">
             <v-flex lg4 xs12 sm6 md4 class="mt-3 mb-3" :key="vehicle.key">
               <v-card class="white elevation-1 mb-2">
                 <v-card-media height="300">
@@ -68,8 +65,7 @@
                   <h2 class="title">{{vehicle.model}}</h2>
                 </v-card-title>
                 <v-card-actions>
-
-                  <v-btn flat class="blue--text darken-1" v-tooltip:top="{html:'Show Maintenances'}" @click.native="selectVehicle(key)">
+                  <v-btn flat class="blue--text darken-1" v-tooltip:top="{html:'Show Maintenances'}" @click.native="selectVehicle(vehicle.key)">
                     <v-icon left class="blue--text darken-1">build</v-icon>maintenances</v-btn>
                   <v-spacer></v-spacer>
                   <v-menu max-width="250" left>
@@ -80,7 +76,7 @@
                       </v-card-text>
                       <v-card-actions>
                         <v-btn flat class="blue--text">Cancel</v-btn>
-                        <v-btn flat class="red--text" @click.native="deleteVehicle(key)">Remove</v-btn>
+                        <v-btn flat class="red--text" @click.native="deleteVehicle(vehicle.key)">Remove</v-btn>
                       </v-card-actions>
                     </v-card>
                   </v-menu>
@@ -92,7 +88,6 @@
         </v-layout>
       </v-flex>
     </v-layout>
-
     </v-flex>
     </v-layout>
   </v-container>
@@ -100,35 +95,19 @@
 
 <script>
 import Axios from 'axios'
-import Firebase from 'firebase'
-import {
-  database
-} from '@/firebase-config'
 
 export default {
   data() {
     return {
-      selectedVehicle: {
-        model: '',
-        maintenances: 0,
-        imgurl: ''
-      },
-
       newVehicle: {
         model: '',
         maintenances: '0',
         imgurl: ''
       },
-
       suggestedimages: [
 
       ],
       selectedimage: '',
-      newUser: {
-        vehicles: 0,
-        prefCurrency: '$'
-      },
-
       addvehiclecurrentstep: 1,
       addvehicledialog: false,
       imageselectiondialog: false,
@@ -138,19 +117,17 @@ export default {
     }
   },
   computed: {
-    maintenanceTitle: function() {
-      return this.selectedVehicle.model !== null ? this.selectedVehicle.model : 'No vehicle selected'
+    vehicles() {
+      return this.$store.getters.getVehicles
+    },
+    user() {
+      return this.$store.getters.getUser
     }
   },
-  beforeCreate() {
-    this.$bindAsObject('user', database.ref('users').child(Firebase.auth().currentUser.uid))
-  },
   methods: {
-    selectVehicle: function(index) {
-      var uid = Firebase.auth().currentUser.uid
-      this.$bindAsObject('selectedVehicle', database.ref('users').child(uid).child('vehicles').child(index))
+    selectVehicle: function(key) {
       this.$router.push({
-        path: 'vehicle/' + index,
+        path: 'vehicle/' + key,
 
       })
     },
@@ -206,7 +183,7 @@ export default {
       if (this.newVehicle.model) {
         this.addvehicleloading = true
         this.newVehicle.imgurl = this.selectedimage
-        database.ref('users/' + Firebase.auth().currentUser.uid + '/vehicles').push(this.newVehicle)
+        this.$store.dispatch('addVehicle', this.newVehicle)
         this.clearForms()
         this.addvehicleloading = false
         this.closeDialogs()
@@ -215,7 +192,7 @@ export default {
 
     },
     deleteVehicle: function(vehicleKey) {
-      database.ref('users/' + Firebase.auth().currentUser.uid + '/vehicles').child(vehicleKey).remove()
+      this.$store.dispatch('removeVehicle', {vehicleKey: vehicleKey})
 
     },
 

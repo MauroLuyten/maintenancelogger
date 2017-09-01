@@ -1,4 +1,4 @@
-import Firebase from 'firebase'
+/* import Firebase from 'firebase'
 const config = {
   apiKey: "AIzaSyDe-jSD6qqbpK_CZ1uAH3DWcPt8JDWuoGs",
   authDomain: "maintenancelogger.firebaseapp.com",
@@ -7,5 +7,6 @@ const config = {
   storageBucket: "maintenancelogger.appspot.com",
   messagingSenderId: "73510925424"
 }
-export const firebaseApp = Firebase.initializeApp(config)
-export const database = firebaseApp.database()
+export const firebase = Firebase.initializeApp(config)
+export const database = firebase.database()
+ */

@@ -39,7 +39,7 @@
             <v-expansion-panel class="elevation-0 " expand>
               <v-expansion-panel-content v-model="maintenancesexpanded">
                 <div slot="header" class="headline">Maintenances</div>
-                <v-data-table :items="vehicleMaintenances" :headers="maintenancetable.headers" class="elevation-0 white" v-model="selected" selected-key=".key" no-data-text="No maintenances added" hide-actions select-all>
+                <v-data-table :items="maintenances" :headers="maintenancetable.headers" class="elevation-0 white" v-model="selected" selected-key=".key" no-data-text="No maintenances added" hide-actions select-all>
                   <template slot="items" scope="props">
                     <td>
                       <v-checkbox primary hide-details v-model="props.selected"></v-checkbox>
@@ -130,19 +130,18 @@ export default {
 
     }
   },
-  created() {
-    this.initFirebaseBindings()
-  },
   computed: {
-
+    user () {
+      return this.$store.getters.getUser
+    },
+    vehicle () {
+      return this.$store.getters.getVehicle(this.$props.vehicleKey)
+    },
+    maintenances () {
+      return this.vehicle.maintenances
+    }
   },
   methods: {
-    initFirebaseBindings: function() {
-      var uid = Firebase.auth().currentUser.uid
-      var index = this.$route.params.vehicleKey
-      this.$bindAsObject('vehicle', database.ref('users').child(uid).child('vehicles').child(index))
-      this.$bindAsArray('vehicleMaintenances', database.ref('users').child(uid).child('vehicles').child(index).child('maintenances'))
-    },
     addMaintenance: function() {
       if (this.newMaintenance.description) {
         database.ref('users/' + Firebase.auth().currentUser.uid + '/vehicles/' + this.vehicleKey + '/maintenances').push(this.newMaintenance)
