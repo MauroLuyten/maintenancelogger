@@ -29,6 +29,9 @@ export const store = new Vuex.Store({
     },
     removeVehicle (state, payload) {
       state.vehicles = state.vehicles.filter(vehicle => vehicle.key !== payload)
+    },
+    addMaintenance (state, payload) {
+      state.vehicles.find(vehicle => vehicle.key === payload.vehicleKey).maintenances.push(payload.maintenance)
     }
   },
   actions: {
@@ -101,7 +104,6 @@ export const store = new Vuex.Store({
       ).catch(
         error => {
           commit('setError', error)
-          console.log(error)
         }
       )
     },
@@ -124,6 +126,22 @@ export const store = new Vuex.Store({
       firebase.database().ref('users/' + state.user.uid + '/vehicles/' + vehicleKey).remove()
       .then(data => {
         commit('removeVehicle', vehicleKey)
+      }).catch(error => {
+        commit('setError', error)
+      })
+    },
+    addMaintenance ({commit, state}, payload) {
+      let vehicleKey = payload.vehicleKey
+      const maintenance = {
+        description: payload.maintenance.description,
+        date: payload.maintenance.date,
+        kilometers: payload.maintenance.kilometers,
+        cost: payload.maintenance.cost
+      }
+      firebase.database().ref('users/' + state.user.uid + '/vehicles/' + vehicleKey + '/maintenances').push(maintenance)
+      .then(data => {
+        maintenance.key = data.key
+        commit('addMaintenance', {vehicleKey, maintenance})
       }).catch(error => {
         commit('setError', error)
       })

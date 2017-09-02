@@ -79,8 +79,6 @@
   </v-container>
 </template>
 <script>
-import Firebase from 'firebase'
-import { database } from '@/firebase-config'
 export default {
   props: ['vehicleKey'],
   data() {
@@ -111,7 +109,6 @@ export default {
       vehicleMaintenances: [
 
       ],
-
       newMaintenance: {
         description: '',
         date: '',
@@ -138,13 +135,14 @@ export default {
       return this.$store.getters.getVehicle(this.$props.vehicleKey)
     },
     maintenances () {
-      return this.vehicle.maintenances
+      return this.vehicle.maintenances !== '0' ? this.vehicle.maintenances : []
     }
   },
   methods: {
     addMaintenance: function() {
       if (this.newMaintenance.description) {
-        database.ref('users/' + Firebase.auth().currentUser.uid + '/vehicles/' + this.vehicleKey + '/maintenances').push(this.newMaintenance)
+        //database.ref('users/' + Firebase.auth().currentUser.uid + '/vehicles/' + this.vehicleKey + '/maintenances').push(this.newMaintenance)
+        this.$store.dispatch('addMaintenance', {vehicleKey: this.$props.vehicleKey,maintenance: this.newMaintenance })
         this.clearForms()
         this.closeDialogs()
       }
