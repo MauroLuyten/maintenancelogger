@@ -56,8 +56,8 @@
         </v-layout>
         <v-layout row justify-start wrap>
           <template v-for="(vehicle,key) in vehicles">
-            <v-flex lg4 xs12 sm6 md4 class="mt-3 mb-3" :key="vehicle.key">
-              <v-card class="white elevation-1 mb-2">
+            <v-flex lg4 xs12 sm6 md4  :key="vehicle.key">
+              <v-card class="white elevation-1 ma-1">
                 <v-card-media height="300">
                   <img :src="vehicle.imgurl">
                 </v-card-media>
