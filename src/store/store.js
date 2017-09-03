@@ -93,15 +93,15 @@ export const store = new Vuex.Store({
         snapshot.forEach(item => {
           let vehicle = item.val()
           vehicle.key = item.key
+          let maintenances = []
           if (vehicle.maintenances !== '0') {
-            let maintenances = []
             Object.keys(vehicle.maintenances).forEach(key => {
               let maintenance = vehicle.maintenances[key]
               maintenance.key = key
               maintenances.push(maintenance)
             })
-            vehicle.maintenances = maintenances
           }
+          vehicle.maintenances = maintenances
           vehicles.push(vehicle)
         })
         commit('loadVehicles', {vehicles: vehicles})
