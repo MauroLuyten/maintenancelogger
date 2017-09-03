@@ -20,7 +20,7 @@
                         <v-spacer></v-spacer>
                         <v-btn 
                           class="blue-grey white--text" 
-                          to="/login" 
+                          to="/overview" 
                           v-tooltip:bottom="{ html: 'Go to Overview' }">
                             Overview
                           </v-btn>
