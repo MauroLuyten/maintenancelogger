@@ -6,7 +6,13 @@
           <v-card-media>
             <img :src="vehicle.imgurl" alt="">
             <v-dialog v-model="addmaintenancedialog">
-              <v-btn fab medium class="blue-grey overlayed_fab" dark slot="activator" v-tooltip:top="{html:'Add a Maintenance'}">
+              <v-btn 
+                medium 
+                fab 
+                dark 
+                slot="activator" 
+                class="blue-grey overlayed_fab" 
+                v-tooltip:top="{html:'Add a Maintenance'}">
                 <v-icon>add</v-icon>
               </v-btn>
               <v-card>
@@ -16,12 +22,34 @@
                 </v-card-title>
                 <v-card-text>
                   <v-menu full-width>
-                    <v-text-field slot="activator" label="Date" v-model="newMaintenance.date" append-icon="event" required></v-text-field>
+                    <v-text-field 
+                      slot="activator" 
+                      label="Date" 
+                      v-model="newMaintenance.date" 
+                      append-icon="event" 
+                      required>
+                    </v-text-field>
                     <v-date-picker v-model="newMaintenance.date"></v-date-picker>
                   </v-menu>
-                  <v-text-field label="Description" append-icon="description" v-model="newMaintenance.description" multi-line required></v-text-field>
-                  <v-text-field label="Kilometers (km)" type="number" v-model="newMaintenance.kilometers" required></v-text-field>
-                  <v-text-field label="Cost (€)" type="number" v-model="newMaintenance.cost" required></v-text-field>
+                  <v-text-field 
+                    label="Description" 
+                    append-icon="description" 
+                    v-model="newMaintenance.description" 
+                    multi-line 
+                    required>
+                  </v-text-field>
+                  <v-text-field 
+                    label="Kilometers (km)" 
+                    type="number" 
+                    v-model="newMaintenance.kilometers" 
+                    required>
+                  </v-text-field>
+                  <v-text-field 
+                  label="Cost (€)" 
+                  type="number" 
+                  v-model="newMaintenance.cost" 
+                  required>
+                  </v-text-field>
                 </v-card-text>
                 <v-card-actions>
                   <v-layout row justify-space-between>

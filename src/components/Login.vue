@@ -3,25 +3,75 @@
     <v-layout row justify-center class="pl-2 pr-2 pt-2">
       <v-flex xs12 sm6 md4 lg3 xl2>
         <v-card>
-          <v-progress-linear class="blue-grey lighten-1 mb-0" indeterminate :active="loading"></v-progress-linear>
+          <v-progress-linear 
+            class="blue-grey lighten-1 mb-0" 
+            indeterminate 
+            :active="loading">
+          </v-progress-linear>
           <v-card-media class="blue-grey lighten-3">
             <v-card-title>
               <h2 class="headline black--text">{{authModeTitle}}</h2>
             </v-card-title>
           </v-card-media>
           <v-card-text>
-            <v-alert error dismissible v-if="error" v-model="error">{{error.message}}</v-alert>
-            <v-text-field v-model="email" :hint="hints.email" persistent-hint :rules="[rules.email]" type="text" name="input-email" label="Email" required>
+            <v-alert 
+              error 
+              dismissible 
+              v-if="error" 
+              v-model="error">
+                {{error.message}}
+            </v-alert>
+            <v-text-field 
+              v-model="email" 
+              :hint="hints.email" 
+              persistent-hint 
+              :rules="[rules.email]" 
+              type="text" 
+              name="input-email" 
+              label="Email" 
+              required>
             </v-text-field>
-            <v-text-field v-model="password" :hint="hints.password" persistent-hint min="8" counter type="password" name="input-password" label="Password" required>
+            <v-text-field 
+              v-model="password" 
+              :hint="hints.password" 
+              persistent-hint 
+              min="8" 
+              counter 
+              type="password" 
+              name="input-password" 
+              label="Password" 
+              required>
             </v-text-field>
-            <v-text-field v-if="!isAuthModeLogin" v-model="password2" :hint="hints.password" :rules="[rules.password2]" persistent-hint min="8" counter type="password" name="input-password-repeat" label="Password" required>
+            <v-text-field 
+              v-if="!isAuthModeLogin" 
+              v-model="password2" 
+              :hint="hints.password" 
+              :rules="[rules.password2]" 
+              persistent-hint 
+              min="8" 
+              counter 
+              type="password" 
+              name="input-password-repeat" 
+              label="Password" 
+              required>
             </v-text-field>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn :raised="isAuthModeLogin" :flat="!isAuthModeLogin" :class="loginClass" @click.native="login">Login</v-btn>
-            <v-btn :raised="!isAuthModeLogin" :flat="isAuthModeLogin" :class="registerClass" @click.native="register">Register</v-btn>
+            <v-btn 
+              :raised="isAuthModeLogin" 
+              :flat="!isAuthModeLogin" 
+              :class="loginClass" 
+              @click.native="login">
+                Login
+            </v-btn>
+            <v-btn 
+              :raised="!isAuthModeLogin" 
+              :flat="isAuthModeLogin" 
+              :class="registerClass" 
+              @click.native="register">
+                Register
+            </v-btn>
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -75,7 +125,8 @@ export default {
       return this.$store.getters.getError
     },
     loading() {
-      return this.$store.getters.getLoading
+      return this.$store.getters.getL
+        oading
     }
   },
   watch: {

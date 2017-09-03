@@ -6,7 +6,16 @@
           <h1 class="display-1 ma-1">Your Vehicles</h1>
           <v-spacer class="hidden-sm-and-up"></v-spacer>
           <v-dialog v-model="addvehicledialog" width="900" class="ma-0 pa-0" lazy>
-            <v-btn fab medium fixed bottom right class="blue-grey fixed_fab" dark slot="activator" v-tooltip:top="{html:'Add a Vehicle'}" >
+            <v-btn 
+              fab 
+              medium 
+              dark 
+              fixed 
+              bottom 
+              right 
+              class="blue-grey fixed_fab" 
+              slot="activator" 
+              v-tooltip:top="{html:'Add a Vehicle'}" >
               <v-icon>add</v-icon>
             </v-btn>
             <v-stepper v-model="addvehiclecurrentstep" vertical class="elevation-1 white">
@@ -20,11 +29,22 @@
                     <h2 class="headline">Add vehicle</h2>
                   </v-card-title>
                   <v-card-text>
-                    <v-text-field @keyup.enter="showSuggestedImages()" label="Vehicle Model" required v-model="newVehicle.model"></v-text-field>
+                    <v-text-field 
+                      @keyup.enter="showSuggestedImages()" 
+                      label="Vehicle Model" 
+                      required 
+                      v-model="newVehicle.model">
+                    </v-text-field>
                   </v-card-text>
                   <v-card-actions>
-                    <v-btn class="blue--text darken-1" flat @click.native="closeDialogs()">Close</v-btn>
-                    <v-btn class="white--text blue darken-1" raised @click.native="showSuggestedImages()">Continue</v-btn>
+                    <v-btn class="blue--text darken-1" flat 
+                      @click.native="closeDialogs()">
+                      Close
+                    </v-btn>
+                    <v-btn class="white--text blue darken-1" raised 
+                      @click.native="showSuggestedImages()">
+                      Continue
+                    </v-btn>
                   </v-card-actions>
                 </v-card>
               </v-stepper-content>
@@ -41,7 +61,14 @@
                     <p>Please
                       <b>click</b> on the image you would like to be used:</p>
                     <v-carousel dark cycle ref="suggestedcarousel">
-                      <v-carousel-item v-for="(item,index) in suggestedimages" :key="item.link" :src="item.link" v-badge="isSelectedImage(item.link)" @click.native="selectImage(item.link, index)" style="cursor:pointer;">
+                      <v-carousel-item 
+                        v-for="(item,index) 
+                        in suggestedimages" 
+                        :key="item.link" 
+                        :src="item.link" 
+                        v-badge="isSelectedImage(item.link)" 
+                        @click.native="selectImage(item.link, index)" 
+                        style="cursor:pointer;">
                       </v-carousel-item>
                     </v-carousel>
                   </v-card-text>
@@ -65,11 +92,21 @@
                   <h2 class="title">{{vehicle.model}}</h2>
                 </v-card-title>
                 <v-card-actions>
-                  <v-btn flat class="blue--text darken-1" v-tooltip:top="{html:'Show Maintenances'}" @click.native="selectVehicle(vehicle.key)">
+                  <v-btn 
+                    flat 
+                    class="blue--text darken-1" 
+                    v-tooltip:top="{html:'Show Maintenances'}" 
+                    @click.native="selectVehicle(vehicle.key)">
                     <v-icon left class="blue--text darken-1">build</v-icon>maintenances</v-btn>
                   <v-spacer></v-spacer>
                   <v-menu max-width="250" left>
-                    <v-btn raised slot="activator" class="red white--text right" v-tooltip:top="{html:'Remove Vehicle'}">remove</v-btn>
+                    <v-btn 
+                      raised 
+                      slot="activator" 
+                      class="red white--text right" 
+                      v-tooltip:top="{html:'Remove Vehicle'}">
+                      remove
+                    </v-btn>
                     <v-card class="elevation-1">
                       <v-card-title class="title">Confirmation</v-card-title>
                       <v-card-text>Are you sure you want to remove {{vehicle.model}} and its maintenances?
@@ -118,7 +155,8 @@ export default {
   },
   computed: {
     vehicles() {
-      return this.$store.getters.getVehicles
+      return 
+        this.$store.getters.getVehicles
     },
     user() {
       return this.$store.getters.getUser
