@@ -5,7 +5,7 @@
         <v-card id="vehicle_page_card">
           <v-card-media>
             <img :src="vehicle.imgurl" alt="">
-            <v-dialog v-model="addmaintenancedialog">
+            <v-dialog v-model="addmaintenancedialog" width="350">
               <v-btn 
                 medium 
                 fab 
@@ -21,15 +21,16 @@
                   <h2 class="headline">Add maintenance</h2>
                 </v-card-title>
                 <v-card-text>
-                  <v-menu full-width>
+                  <v-menu :nudge-left="15" full-width max-width="290px" lazy>
                     <v-text-field 
                       slot="activator" 
                       label="Date" 
                       v-model="newMaintenance.date" 
                       append-icon="event" 
+                      readonly
                       required>
                     </v-text-field>
-                    <v-date-picker v-model="newMaintenance.date"></v-date-picker>
+                    <v-date-picker v-model="newMaintenance.date" scrollable></v-date-picker>
                   </v-menu>
                   <v-text-field 
                     label="Description" 
@@ -161,8 +162,7 @@ export default {
       },
       addmaintenancedialog: false,
       addmaintenanceloading: false,
-      maintenancesexpanded: true,
-
+      maintenancesexpanded: true
     }
   },
   computed: {
