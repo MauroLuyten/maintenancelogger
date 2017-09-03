@@ -4,7 +4,7 @@ import Home from '@/components/Home'
 import Overview from '@/components/Overview'
 import Vehicle from '@/components/Vehicle'
 import Login from '@/components/Login'
-import Firebase from 'firebase'
+import AuthGuard from '@/router/auth-guard'
 
 Vue.use(Router)
 
@@ -20,50 +20,24 @@ export default new Router({
     path: '/',
     name: 'homepage',
     component: Home
-    },
-    {
-      path: '/overview',
-      name: 'overviewpage',
-      component: Overview,
-      beforeEnter: (to, from, next) => {
-        if (!Firebase.auth().currentUser) {
-          next({
-            path: '/login'
-          })
-        } else {
-          next()
-        }
-      }
-    },
-    {
-      path: '/login',
-      name: 'loginpage',
-      component: Login,
-      beforeEnter: (to, from, next) => {
-        if (Firebase.auth().currentUser) {
-          next({
-            path: '/overview'
-          })
-        } else {
-          next()
-        }
-      }
-    },
-    {
-      path: '/vehicle/:vehicleKey',
-      name: 'vehiclepage',
-      component: Vehicle,
-      props: true,
-      beforeEnter: (to, from, next) => {
-        if (!Firebase.auth().currentUser) {
-          next({
-            path: '/login'
-          })
-        } else {
-          next()
-        }
-      }
-    },
-  ],
-
+  },
+  {
+    path: '/overview',
+    name: 'overviewpage',
+    component: Overview,
+    beforeEnter: AuthGuard
+  },
+  {
+    path: '/login',
+    name: 'loginpage',
+    component: Login
+  },
+  {
+    path: '/vehicle/:vehicleKey',
+    name: 'vehiclepage',
+    component: Vehicle,
+    props: true,
+    beforeEnter: AuthGuard
+  }
+  ]
 })
