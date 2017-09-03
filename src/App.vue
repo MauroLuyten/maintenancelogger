@@ -32,7 +32,7 @@
       <v-spacer></v-spacer>
 
       <v-toolbar-items class="hidden-xs-only mr-0">
-        <v-btn flat v-for="item in AuthenticatedMenuItems" :key="item.title" :to="item.link">
+        <v-btn flat v-for="item in AuthenticatedMenuItems" :key="item.title" :to="item.link" exact>
           <v-icon dark left>{{item.icon}}</v-icon>
           {{item.title}}
         </v-btn>
