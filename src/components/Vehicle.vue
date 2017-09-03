@@ -39,10 +39,22 @@
             <v-expansion-panel class="elevation-0 " expand>
               <v-expansion-panel-content v-model="maintenancesexpanded">
                 <div slot="header" class="headline">Maintenances</div>
-                <v-data-table :items="maintenances" :headers="maintenancetable.headers" class="elevation-0 white" v-model="selected" selected-key=".key" no-data-text="No maintenances added" hide-actions select-all>
+                <v-data-table 
+                  v-model="selected" 
+                  :headers="maintenancetable.headers" 
+                  :items="maintenances" 
+                  class="elevation-0 white" 
+                  selected-key="key" 
+                  no-data-text="No maintenances added" 
+                  hide-actions 
+                  select-all>
                   <template slot="items" scope="props">
                     <td>
-                      <v-checkbox primary hide-details v-model="props.selected"></v-checkbox>
+                      <v-checkbox 
+                        primary 
+                        hide-details 
+                        v-model="props.selected">
+                      </v-checkbox>
                     </td>
                     <td>{{props.item.date}}</td>
                     <td>
@@ -62,7 +74,7 @@
                         </v-card-text>
                         <v-card-actions>
                           <v-btn flat class="blue--text">Cancel</v-btn>
-                          <v-btn flat class="red--text" @click.native="deleteMaintenance()">Remove</v-btn>
+                          <v-btn flat class="red--text" @click.native="deleteMaintenances()">Remove</v-btn>
                         </v-card-actions>
                       </v-card>
                     </v-menu>
@@ -71,9 +83,7 @@
               </v-expansion-panel-content>
             </v-expansion-panel>
           </v-card-text>
-
         </v-card>
-
       </v-flex>
     </v-layout>
   </v-container>
@@ -135,7 +145,7 @@ export default {
       return this.$store.getters.getVehicle(this.$props.vehicleKey)
     },
     maintenances () {
-      return this.vehicle.maintenances !== '0' ? this.vehicle.maintenances : []
+      return this.vehicle.maintenances
     }
   },
   methods: {
@@ -147,11 +157,13 @@ export default {
         this.closeDialogs()
       }
     },
-    deleteMaintenance: function() {
-
-      for (let i = 0; i != this.selected.length; i++) {
-        let key = this.selected[i]['.key']
-        database.ref('users/' + Firebase.auth().currentUser.uid + '/vehicles/' + this.vehicleKey + '/maintenances').child(key).remove();
+    deleteMaintenances: function() {
+      let maintenanceKeys = []
+      this.selected.forEach(vehicle => {
+        maintenanceKeys.push(vehicle.key)
+      })
+      if(maintenanceKeys.length){
+        this.$store.dispatch('removeMaintenances', {vehicleKey: this.$props.vehicleKey, maintenanceKeys})
       }
 
     },

@@ -22,16 +22,22 @@ export const store = new Vuex.Store({
       state.loading = payload
     },
     loadVehicles (state, payload) {
-      state.vehicles = payload
+      state.vehicles = payload.vehicles
     },
     addVehicle (state, payload) {
-      state.vehicles.push(payload)
+      state.vehicles.push(payload.vehicle)
     },
     removeVehicle (state, payload) {
-      state.vehicles = state.vehicles.filter(vehicle => vehicle.key !== payload)
+      state.vehicles = state.vehicles.filter(vehicle => vehicle.key !== payload.vehicleKey)
     },
     addMaintenance (state, payload) {
-      state.vehicles.find(vehicle => vehicle.key === payload.vehicleKey).maintenances.push(payload.maintenance)
+      state.vehicles.find(vehicle => vehicle.key === payload.vehicleKey)
+      .maintenances.push(payload.maintenance)
+    },
+    removeMaintenance (state, payload) {
+      state.vehicles.find(vehicle => vehicle.key === payload.vehicleKey).maintenances = 
+      state.vehicles.find(vehicle => vehicle.key === payload.vehicleKey).maintenances.
+      filter(maintenance => maintenance.key !== payload.maintenanceKey)
     }
   },
   actions: {
@@ -98,7 +104,7 @@ export const store = new Vuex.Store({
           }
           vehicles.push(vehicle)
         })
-        commit('loadVehicles', vehicles)
+        commit('loadVehicles', {vehicles: vehicles})
       }
 
       ).catch(
@@ -116,7 +122,7 @@ export const store = new Vuex.Store({
       firebase.database().ref('users/' + state.user.uid + '/vehicles').push(vehicle)
       .then(data => {
         vehicle.key = data.key
-        commit('addVehicle', vehicle)
+        commit('addVehicle', {vehicle: vehicle})
       }).catch(error => {
         commit('setError', error)
       })
@@ -125,7 +131,7 @@ export const store = new Vuex.Store({
       let vehicleKey = payload.vehicleKey
       firebase.database().ref('users/' + state.user.uid + '/vehicles/' + vehicleKey).remove()
       .then(data => {
-        commit('removeVehicle', vehicleKey)
+        commit('removeVehicle', {vehicleKey: vehicleKey})
       }).catch(error => {
         commit('setError', error)
       })
@@ -145,6 +151,20 @@ export const store = new Vuex.Store({
       }).catch(error => {
         commit('setError', error)
       })
+    },
+    removeMaintenances ({commit, state}, payload) {
+      let vehicleKey = payload.vehicleKey
+      let maintenanceKeys = payload.maintenanceKeys
+      maintenanceKeys.forEach(maintenanceKey => {
+        firebase.database().ref('users/' + state.user.uid + '/vehicles/' + vehicleKey + '/maintenances/' + maintenanceKey)
+        .remove()
+        .then(data => {
+          commit('removeMaintenance', {vehicleKey, maintenanceKey})
+        }).catch(error => {
+          commit('setError', error)
+        })
+      }
+      )
     }
   },
   getters: {
