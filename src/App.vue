@@ -21,16 +21,13 @@
           <v-list-tile-content>Logout</v-list-tile-content>
         </v-list-tile>
       </v-list>
-
     </v-navigation-drawer>
-
     <v-toolbar fixed class="blue-grey" dark>
       <v-toolbar-side-icon @click.native.stop="sideNav=!sideNav"></v-toolbar-side-icon>
       <v-toolbar-title class="white--text">
         <router-link to="/" tag="span" style="cursor: pointer">Maintenance Logger</router-link>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-
       <v-toolbar-items class="hidden-xs-only mr-0">
         <v-btn flat v-for="item in AuthenticatedMenuItems" :key="item.title" :to="item.link" exact>
           <v-icon dark left>{{item.icon}}</v-icon>
@@ -51,7 +48,6 @@
           </v-card-actions>
         </v-card>
       </v-menu>
-
     </v-toolbar>
     <main class="elevation-0 pb-3">
       <router-view></router-view>
@@ -72,13 +68,9 @@ export default {
         { icon: 'home', title: 'Home', link: '/' },
         { icon: 'web', title: 'Overview', link: '/overview' },
         { icon: 'lock', title: 'Login', link: '/login' },
-
       ],
     }
-
   },
-
-
   computed: {
     user() {
       return this.$store.getters.getUser
@@ -93,14 +85,11 @@ export default {
           return obj.title !== 'Login'
         })
       }
-
       return items
     },
     xsOnly: function() {
       return window.matchMedia("(max-width:600px)").matches
-
     }
-
   },
   methods: {
     logout: function() {
@@ -112,10 +101,6 @@ export default {
       vm.auth.message = ''
       vm.auth.hasErrors = false
     },
-
-
-
   }
 }
-
 </script>
