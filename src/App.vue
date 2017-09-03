@@ -44,7 +44,7 @@
         </v-btn>
         <v-card style="width:276px">
           <v-card-title class="title">Your account</v-card-title>
-          <v-card-text>{{auth.user.email}}</v-card-text>
+          <v-card-text>{{user.email}}</v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn dark class="red" @click.native="logout">Logout</v-btn>
@@ -63,19 +63,10 @@
 </template>
 
 <script>
-
-import Firebase from 'firebase'
-import Axios from 'axios'
-
-
-
-
 export default {
   name: 'app',
-
   data() {
     return {
-
       sideNav: false,
       menuItems: [
         { icon: 'home', title: 'Home', link: '/' },
@@ -83,33 +74,17 @@ export default {
         { icon: 'lock', title: 'Login', link: '/login' },
 
       ],
-      auth: {
-        user: null,
-        email: '',
-        password: '',
-        message: '',
-        userName: '',
-        hasErrors: false
-      },
-
     }
 
   },
 
 
   computed: {
-
+    user() {
+      return this.$store.getters.getUser
+    },
     isAuthenticated: function() {
-      Firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-          this.auth.user = user
-          this.uid = user.uid
-        } else {
-          this.auth.user = null
-        }
-      }.bind(this))
-      this.loginloading = false
-      return (this.auth.user !== null)
+      return this.user !== null
     },
     AuthenticatedMenuItems: function() {
       var items = this.menuItems
@@ -122,26 +97,14 @@ export default {
       return items
     },
     xsOnly: function() {
-      //console.log(window.matchMedia("(max-width:600px)").matches)
       return window.matchMedia("(max-width:600px)").matches
 
     }
 
   },
   methods: {
-    /**
-     * Signout the currently logged-in user
-     */
     logout: function() {
-      // Signout the user using firebase
-      Firebase.auth().signOut()
-        .then(function(error) {
-          this.auth.user = Firebase.auth().currentUser
-          this.auth.message = 'User signed out Successfully'
-
-        }.bind(this), function(error) {
-          alert('Failed to signout user, try again later')
-        })
+      this.$store.dispatch('logoutUser')
       this.$router.push('/login')
     },
     clearAuthErrors: function() {
