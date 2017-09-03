@@ -5,7 +5,7 @@
         <v-layout row>
           <h1 class="display-1 ma-1">Your Vehicles</h1>
           <v-spacer class="hidden-sm-and-up"></v-spacer>
-          <v-dialog v-model="addvehicledialog" width="900" class="ma-0 pa-0" lazy>
+          <v-dialog v-model="addvehicledialog" width="900" class="ma-0 pa-0">
             <v-btn 
               fab 
               medium 
@@ -52,7 +52,6 @@
                 Select your image
               </v-stepper-step>
               <v-stepper-content step="2">
-                <v-progress-linear indeterminate :active="addvehicleloading"></v-progress-linear>
                 <v-card class="elevation-0 ma-1">
                   <v-card-title>
                     <h2 class="headline">Suggested Images</h2>
@@ -60,12 +59,12 @@
                   <v-card-text>
                     <p>Please
                       <b>click</b> on the image you would like to be used:</p>
-                    <v-carousel dark cycle ref="suggestedcarousel">
+                    <v-carousel dark cycle ref="suggestedcarousel" v-if="!addvehicleloading">
                       <v-carousel-item 
                         v-for="(item,index) 
                         in suggestedimages" 
-                        :key="item.link" 
                         :src="item.link" 
+                        :key="item.link" 
                         v-badge="isSelectedImage(item.link)" 
                         @click.native="selectImage(item.link, index)" 
                         style="cursor:pointer;">
