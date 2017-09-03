@@ -155,8 +155,7 @@ export default {
   },
   computed: {
     vehicles() {
-      return 
-        this.$store.getters.getVehicles
+      return this.$store.getters.getVehicles
     },
     user() {
       return this.$store.getters.getUser
