@@ -145,9 +145,6 @@ export default {
       selected: [
 
       ],
-      vehicleMaintenances: [
-
-      ],
       newMaintenance: {
         description: '',
         date: '',
