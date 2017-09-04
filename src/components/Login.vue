@@ -98,7 +98,7 @@ export default {
           return pattern.test(value) || 'Invalid email address.'
         },
         password2: (value) => {
-          return this.auth.password === value || "Passwords don't match."
+          return this.password === value || "Passwords don't match."
         }
       },
 
@@ -125,14 +125,13 @@ export default {
       return this.$store.getters.getError
     },
     loading() {
-      return this.$store.getters.getL
-        oading
+      return this.$store.getters.getLoading
     }
   },
   watch: {
     user(value) {
       if (value !== null && value !== undefined) {
-        this.$router.push('/')
+        this.$router.push('/overview')
       }
     }
   },

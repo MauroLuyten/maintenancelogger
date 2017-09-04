@@ -35,13 +35,14 @@ export const store = new Vuex.Store({
       .maintenances.push(payload.maintenance)
     },
     removeMaintenance (state, payload) {
-      state.vehicles.find(vehicle => vehicle.key === payload.vehicleKey).maintenances = 
-      state.vehicles.find(vehicle => vehicle.key === payload.vehicleKey).maintenances.
-      filter(maintenance => maintenance.key !== payload.maintenanceKey)
+      state.vehicles.find(vehicle => vehicle.key === payload.vehicleKey).maintenances =
+      state.vehicles.find(vehicle => vehicle.key === payload.vehicleKey).maintenances
+      .filter(maintenance => maintenance.key !== payload.maintenanceKey)
     }
   },
   actions: {
     loginUser ({commit, dispatch}, payload) {
+      commit('setLoading', true)
       firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
       .then(
         user => {
@@ -51,10 +52,12 @@ export const store = new Vuex.Store({
           }
           commit('setUser', newUser)
           dispatch('loadVehicles')
+          commit('setLoading', false)
         },
       ).catch(
         error => {
           commit('setError', error)
+          commit('setLoading', false)
         }
       )
     },
@@ -63,6 +66,7 @@ export const store = new Vuex.Store({
       commit('setUser', null)
     },
     registerUser ({commit}, payload) {
+      commit('setLoading', true)
       firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
       .then(
         user => {
@@ -71,10 +75,12 @@ export const store = new Vuex.Store({
             email: user.email
           }
           commit('setUser', newUser)
+          commit('setLoading', false)
         }
       ).catch(
         error => {
           commit('setError', error)
+          commit('setLoading', false)
         }
       )
     },
@@ -173,6 +179,9 @@ export const store = new Vuex.Store({
     },
     getError (state) {
       return state.error
+    },
+    getLoading (state) {
+      return state.loading
     },
     getVehicles (state) {
       return state.vehicles
