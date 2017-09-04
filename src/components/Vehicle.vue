@@ -86,15 +86,23 @@
                       </v-checkbox>
                     </td>
                     <td>{{props.item.date}}</td>
-                    <td>
-                      {{props.item.description}}
-                    </td>
-                    <td>{{props.item.kilometers}}</td>
-                    <td>{{props.item.cost}}</td>
+                    <td>{{props.item.description}}</td>
+                    <td class="text-xs-right">{{props.item.kilometers}}</td>
+                    <td class="text-xs-right">{{props.item.cost}}</td>
+                  </template>
+                  <template slot="footer">
+                    
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td class="text-xs-right">total: xxx</td>
+                    
                   </template>
                 </v-data-table>
                 <v-layout row justify-end style="border-top:1px solid rgba(0,0,0,0.24);background-color:white" class="ma-0">
                   <v-card-actions>
+
                     <v-menu max-width="250" left>
                       <v-btn raised slot="activator" class="red white--text" :disabled="!selected.length">delete</v-btn>
                       <v-card class="elevation-1">
@@ -135,11 +143,11 @@ export default {
           }, {
             text: 'Kilometers',
             value: 'kilometers',
-            align: 'left'
+            align: 'right'
           }, {
             text: 'Cost',
             value: 'cost',
-            align: 'left'
+            align: 'right'
           },]
       },
       selected: [
