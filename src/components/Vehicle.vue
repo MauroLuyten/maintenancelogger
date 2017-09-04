@@ -90,13 +90,13 @@
                     <td class="text-xs-right">{{props.item.kilometers}}</td>
                     <td class="text-xs-right">{{props.item.cost}}</td>
                   </template>
-                  <template slot="footer">
+                  <template slot="footer" v-if="selected.length">
                     
                       <td></td>
                       <td></td>
                       <td></td>
                       <td></td>
-                      <td class="text-xs-right">total: xxx</td>
+                      <td class="text-xs-right">total: {{totalCost}}</td>
                     
                   </template>
                 </v-data-table>
@@ -179,12 +179,18 @@ export default {
     },
     maintenances () {
       return this.vehicle.maintenances
+    },
+    totalCost () {
+      let total = 0
+      this.selected.forEach(vehicle =>{
+        total += parseFloat(vehicle.cost)
+      })
+      return total
     }
   },
   methods: {
     addMaintenance: function() {
       if (this.newMaintenance.description) {
-        //database.ref('users/' + Firebase.auth().currentUser.uid + '/vehicles/' + this.vehicleKey + '/maintenances').push(this.newMaintenance)
         this.$store.dispatch('addMaintenance', {vehicleKey: this.$props.vehicleKey,maintenance: this.newMaintenance })
         this.clearForms()
         this.closeDialogs()
@@ -197,6 +203,7 @@ export default {
       })
       if(maintenanceKeys.length){
         this.$store.dispatch('removeMaintenances', {vehicleKey: this.$props.vehicleKey, maintenanceKeys})
+        this.selected = []
       }
 
     },
