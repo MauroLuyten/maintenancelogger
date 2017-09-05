@@ -9,7 +9,8 @@ export const store = new Vuex.Store({
     user: null,
     vehicles: [],
     error: null,
-    loading: false
+    loading: false,
+    message: null
   },
   mutations: {
     setUser (state, payload) {
@@ -20,6 +21,9 @@ export const store = new Vuex.Store({
     },
     setLoading (state, payload) {
       state.loading = payload
+    },
+    setMessage (state, payload) {
+      state.message = payload
     },
     loadVehicles (state, payload) {
       state.vehicles = payload.vehicles
@@ -171,6 +175,12 @@ export const store = new Vuex.Store({
         })
       }
       )
+    },
+    clearError ({commit, state}) {
+      commit('setError', false)
+    },
+    clearMessage ({commit, state}) {
+      commit('setMessage', null)
     }
   },
   getters: {
@@ -188,6 +198,9 @@ export const store = new Vuex.Store({
     },
     getVehicle: (state) => (vehicleKey) => {
       return state.vehicles.find(vehicle => vehicle.key === vehicleKey)
+    },
+    getMessage (state) {
+      return state.message
     }
   }
 })
