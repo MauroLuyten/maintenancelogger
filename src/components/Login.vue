@@ -121,8 +121,13 @@ export default {
     user() {
       return this.$store.getters.getUser
     },
-    error() {
-      return this.$store.getters.getError
+    error: {
+      get: function () {
+        return this.$store.getters.getError
+      },
+      set: function (value) {
+        this.$store.dispatch('clearError')
+      }
     },
     loading() {
       return this.$store.getters.getLoading
@@ -147,6 +152,9 @@ export default {
       this.isAuthModeLogin ? this.authmode = 'register' : (
         this.$store.dispatch('registerUser', { email: this.email, password: this.password })
       )
+    },
+    clearError () {
+      this.$store.dispatch('clearError')
     }
   }
 }
