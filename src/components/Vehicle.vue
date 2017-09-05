@@ -91,13 +91,11 @@
                     <td class="text-xs-right">{{props.item.cost}}</td>
                   </template>
                   <template slot="footer" v-if="selected.length">
-                    
                       <td></td>
                       <td></td>
                       <td></td>
                       <td></td>
                       <td class="text-xs-right">total: {{totalCost}}</td>
-                    
                   </template>
                 </v-data-table>
                 <v-layout row justify-end style="border-top:1px solid rgba(0,0,0,0.24);background-color:white" class="ma-0">
