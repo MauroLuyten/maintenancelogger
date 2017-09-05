@@ -51,6 +51,14 @@
     </v-toolbar>
     <main class="elevation-0 pb-3">
       <router-view></router-view>
+      <v-snackbar
+      :timeout="message.timeout"
+      :success="message.context === 'success'"
+      :info="message.context === 'info'"
+      :warning="message.context === 'warning'"
+      :error="message.context === 'error'"
+      v-model="message"
+    >{{message.text}}</v-snackbar>
     </main>
     <v-footer class="blue-grey white--text">
       <span>&copy; Maintenance Logger 2017</span>
@@ -74,6 +82,16 @@ export default {
   computed: {
     user() {
       return this.$store.getters.getUser
+    },
+    message: {
+      get () {
+        return this.$store.getters.getMessage === null ? false : this.$store.getters.getMessage
+      },
+      set (value) {
+        if(value==false){
+          this.$store.dispatch('clearMessage')
+        }
+      }
     },
     isAuthenticated: function() {
       return this.user !== null

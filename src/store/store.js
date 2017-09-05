@@ -9,8 +9,8 @@ export const store = new Vuex.Store({
     user: null,
     vehicles: [],
     error: null,
-    loading: false,
-    message: null
+    message: null,
+    loading: false
   },
   mutations: {
     setUser (state, payload) {
@@ -57,6 +57,7 @@ export const store = new Vuex.Store({
           commit('setUser', newUser)
           dispatch('loadVehicles')
           commit('setLoading', false)
+          commit('setMessage', {context: 'success', text: 'Successfully logged into ' + payload.email, timeout: 4500})
         },
       ).catch(
         error => {
@@ -68,6 +69,7 @@ export const store = new Vuex.Store({
     logoutUser ({commit}) {
       firebase.auth().signOut
       commit('setUser', null)
+      commit('setMessage', {context: 'success', text: 'Successfully logged out', timeout: 4500})
     },
     registerUser ({commit}, payload) {
       commit('setLoading', true)
@@ -80,6 +82,8 @@ export const store = new Vuex.Store({
           }
           commit('setUser', newUser)
           commit('setLoading', false)
+          commit('setMessage',
+          {context: 'succes', text: 'Successfully registered and logged into ' + payload.email, timeout: 4500})
         }
       ).catch(
         error => {
@@ -94,6 +98,7 @@ export const store = new Vuex.Store({
         email: payload.email
       }
       commit('setUser', newUser)
+      commit('setMessage', {context: 'success', text: 'Automatically logged into ' + payload.email, timeout: 4500})
       dispatch('loadVehicles')
     },
     loadVehicles ({commit, state}) {
@@ -133,6 +138,7 @@ export const store = new Vuex.Store({
       .then(data => {
         vehicle.key = data.key
         commit('addVehicle', {vehicle: vehicle})
+        commit('setMessage', {context: 'success', text: 'Successfully added ' + vehicle.model, timeout: 4500})
       }).catch(error => {
         commit('setError', error)
       })
@@ -177,7 +183,7 @@ export const store = new Vuex.Store({
       )
     },
     clearError ({commit, state}) {
-      commit('setError', false)
+      commit('setError', null)
     },
     clearMessage ({commit, state}) {
       commit('setMessage', null)
