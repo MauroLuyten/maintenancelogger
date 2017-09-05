@@ -8,7 +8,7 @@
   <v-app light class="" fixed-toolbar fill-height>
     <v-navigation-drawer temporary clipped v-model="sideNav">
       <v-list>
-        <v-list-tile v-for="item in AuthenticatedMenuItems" :key="item.title" :to="item.link">
+        <v-list-tile v-for="item in AuthenticatedMenuItems" :key="item.title" :to="item.link" exact>
           <v-list-tile-action>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-tile-action>
