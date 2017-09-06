@@ -85,7 +85,7 @@
             <v-flex lg4 xs12 sm6 md4  :key="vehicle.key">
               <v-card class="white elevation-1 ma-1">
                 <v-card-media height="300">
-                  <img :src="vehicle.imgurl">
+                  <img :src="vehicle.imgurl" :alt="vehicle.model">
                 </v-card-media>
                 <v-card-title>
                   <h2 class="title">{{vehicle.model}}</h2>

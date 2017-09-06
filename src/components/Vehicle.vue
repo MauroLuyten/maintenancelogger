@@ -4,7 +4,7 @@
       <v-flex xs12 md9 lg7 xl4 class="mt-3">
         <v-card id="vehicle_page_card">
           <v-card-media>
-            <img :src="vehicle.imgurl" alt="">
+            <img :src="vehicle.imgurl" :alt="vehicle.model">
             <v-dialog v-model="addmaintenancedialog" width="350">
               <v-btn 
                 medium 
