@@ -25,6 +25,9 @@ export const store = new Vuex.Store({
     setMessage (state, payload) {
       state.message = payload
     },
+    setVehicles (state, payload) {
+      state.vehicles = payload
+    },
     loadVehicles (state, payload) {
       state.vehicles = payload.vehicles
     },
@@ -69,6 +72,7 @@ export const store = new Vuex.Store({
     logoutUser ({commit}) {
       firebase.auth().signOut
       commit('setUser', null)
+      commit('setVehicles', [])
       commit('setMessage', {context: 'success', text: 'Successfully logged out', timeout: 4500})
     },
     registerUser ({commit}, payload) {
@@ -137,6 +141,7 @@ export const store = new Vuex.Store({
       firebase.database().ref('users/' + state.user.uid + '/vehicles').push(vehicle)
       .then(data => {
         vehicle.key = data.key
+        vehicle.maintenances = []
         commit('addVehicle', {vehicle: vehicle})
         commit('setMessage', {context: 'success', text: 'Successfully added ' + vehicle.model, timeout: 4500})
       }).catch(error => {
