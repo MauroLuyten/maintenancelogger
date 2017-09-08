@@ -80,7 +80,7 @@
             </v-stepper>
           </v-dialog>
         </v-layout>
-        <v-layout row justify-start wrap>
+        <v-layout v-if="vehicles.length" row justify-start wrap>
           <template v-for="(vehicle,key) in vehicles">
             <v-flex lg4 xs12 sm6 md4  :key="vehicle.key">
               <v-card class="white elevation-1 ma-1">
@@ -116,11 +116,15 @@
                       </v-card-actions>
                     </v-card>
                   </v-menu>
-
                 </v-card-actions>
               </v-card>
             </v-flex>
           </template>
+        </v-layout>
+        <v-layout v-if="!vehicles.length">
+          <v-flex>
+            <p class="headline ma-1">You currently don't have any vehicles added.</p>
+          </v-flex>
         </v-layout>
       </v-flex>
     </v-layout>
