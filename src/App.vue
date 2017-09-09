@@ -5,7 +5,7 @@
 </style>
 
 <template>
-  <v-app light class="" fixed-toolbar fill-height>
+  <v-app light fixed-toolbar fill-height>
     <v-navigation-drawer temporary clipped v-model="sideNav">
       <v-list>
         <v-list-tile v-for="item in AuthenticatedMenuItems" :key="item.title" :to="item.link" exact>
@@ -22,7 +22,7 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar fixed class="blue-grey" dark>
+    <v-toolbar fixed class="primary" dark>
       <v-toolbar-side-icon @click.native.stop="sideNav=!sideNav"></v-toolbar-side-icon>
       <v-toolbar-title class="white--text">
         <router-link to="/" tag="span" style="cursor: pointer">Maintenance Logger</router-link>

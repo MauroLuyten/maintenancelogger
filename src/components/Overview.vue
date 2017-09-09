@@ -8,12 +8,11 @@
           <v-dialog v-model="addvehicledialog" width="900" class="ma-0 pa-0">
             <v-btn 
               fab 
-              medium 
-              dark 
+              medium  
               fixed 
               bottom 
               right 
-              class="blue-grey fixed_fab" 
+              class="accent fixed_fab" 
               slot="activator" 
               v-tooltip:top="{html:'Add a Vehicle'}" >
               <v-icon>add</v-icon>
@@ -96,15 +95,15 @@
                     class="blue--text darken-1" 
                     v-tooltip:top="{html:'Show Maintenances'}" 
                     @click.native="selectVehicle(vehicle.key)">
-                    <v-icon left class="blue--text darken-1">build</v-icon>maintenances</v-btn>
+                    maintenances
+                  </v-btn>
                   <v-spacer></v-spacer>
                   <v-menu max-width="250" left>
                     <v-btn 
-                      raised 
+                      icon 
                       slot="activator" 
-                      class="red white--text right" 
                       v-tooltip:top="{html:'Remove Vehicle'}">
-                      remove
+                      <v-icon>delete</v-icon>
                     </v-btn>
                     <v-card class="elevation-1">
                       <v-card-title class="title">Confirmation</v-card-title>
