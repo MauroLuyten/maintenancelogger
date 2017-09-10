@@ -19,7 +19,7 @@
                     <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn 
-                          class="blue-grey white--text" 
+                          class="accent black--text" 
                           to="/overview" 
                           v-tooltip:bottom="{ html: 'Go to Overview' }">
                             Overview

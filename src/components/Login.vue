@@ -4,13 +4,15 @@
       <v-flex xs12 sm6 md4 lg3 xl2>
         <v-card>
           <v-progress-linear 
-            class="blue-grey lighten-1 mb-0" 
+            color-front="accent"
+            color-back="primary"
+            class="primary mb-0" 
             indeterminate 
             :active="loading">
           </v-progress-linear>
-          <v-card-media class="blue-grey lighten-3">
+          <v-card-media class="secondary">
             <v-card-title>
-              <h2 class="headline black--text">{{authModeTitle}}</h2>
+              <h2 class="headline white--text">{{authModeTitle}}</h2>
             </v-card-title>
           </v-card-media>
           <v-card-text>
@@ -113,10 +115,10 @@ export default {
       return this.isAuthModeLogin ? 'Login' : 'Register'
     },
     loginClass() {
-      return this.isAuthModeLogin ? 'blue-grey darken-1 white--text' : 'blue-grey--text'
+      return this.isAuthModeLogin ? 'primary white--text' : 'accent--text'
     },
     registerClass() {
-      return !this.isAuthModeLogin ? 'blue-grey darken-1 white--text' : 'blue-grey--text'
+      return !this.isAuthModeLogin ? 'primary white--text' : 'accent--text'
     },
     user() {
       return this.$store.getters.getUser

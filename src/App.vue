@@ -5,8 +5,8 @@
 </style>
 
 <template>
-  <v-app light fixed-toolbar fill-height>
-    <v-navigation-drawer temporary clipped v-model="sideNav">
+  <v-app fixed-toolbar fill-height>
+    <v-navigation-drawer temporary v-model="sideNav">
       <v-list>
         <v-list-tile v-for="item in AuthenticatedMenuItems" :key="item.title" :to="item.link" exact>
           <v-list-tile-action>
@@ -24,7 +24,7 @@
     </v-navigation-drawer>
     <v-toolbar fixed class="primary" dark>
       <v-toolbar-side-icon @click.native.stop="sideNav=!sideNav"></v-toolbar-side-icon>
-      <v-toolbar-title class="white--text">
+      <v-toolbar-title >
         <router-link to="/" tag="span" style="cursor: pointer">Maintenance Logger</router-link>
       </v-toolbar-title>
       <v-spacer></v-spacer>
@@ -49,7 +49,7 @@
         </v-card>
       </v-menu>
     </v-toolbar>
-    <main class="elevation-0 pb-3">
+    <main class="grey lighten-3 elevation-0 pb-3">
       <router-view></router-view>
       <v-snackbar
       :timeout="message.timeout"
@@ -60,7 +60,7 @@
       v-model="message"
     >{{message.text}}</v-snackbar>
     </main>
-    <v-footer class="blue-grey white--text">
+    <v-footer class="secondary white--text">
       <span>&copy; Maintenance Logger 2017</span>
     </v-footer>
   </v-app>

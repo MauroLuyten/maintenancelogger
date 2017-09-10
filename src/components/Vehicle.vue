@@ -8,10 +8,9 @@
             <v-dialog v-model="addmaintenancedialog" width="350">
               <v-btn 
                 medium 
-                fab 
-                dark 
+                fab  
                 slot="activator" 
-                class="blue-grey overlayed_fab" 
+                class="accent overlayed_fab" 
                 v-tooltip:top="{html:'Add a Maintenance'}">
                 <v-icon>add</v-icon>
               </v-btn>
@@ -61,7 +60,7 @@
               </v-card>
             </v-dialog>
           </v-card-media>
-          <v-card-title>
+          <v-card-title class="grey lighten-3">
             <h3>{{vehicle.model}}</h3>
           </v-card-title>
           <v-card-text class="ma-0 pa-0">
@@ -99,10 +98,12 @@
                   </template>
                 </v-data-table>
                 <v-layout row justify-end style="border-top:1px solid rgba(0,0,0,0.24);background-color:white" class="ma-0">
-                  <v-card-actions>
+                  <v-card-actions class="pa-0">
 
                     <v-menu max-width="250" left>
-                      <v-btn raised slot="activator" class="red white--text" :disabled="!selected.length">delete</v-btn>
+                      <v-btn icon slot="activator" class="pa-0" :disabled="!selected.length">
+                        <v-icon>delete</v-icon>
+                      </v-btn>
                       <v-card class="elevation-1">
                         <v-card-title class="title">Confirmation</v-card-title>
                         <v-card-text>Are you sure you want to remove {{selected.length}} maintenance(s)?

@@ -83,22 +83,24 @@
           <template v-for="(vehicle,key) in vehicles">
             <v-flex lg4 xs12 sm6 md4  :key="vehicle.key">
               <v-card class="white elevation-1 ma-1">
-                <v-card-media height="300">
-                  <img :src="vehicle.imgurl" :alt="vehicle.model">
+                <v-card-media height="250" :src="vehicle.imgurl" cover>
                 </v-card-media>
-                <v-card-title>
+                <v-card-title class="grey lighten-3">
                   <h2 class="title">{{vehicle.model}}</h2>
                 </v-card-title>
-                <v-card-actions>
+                <v-card-actions class="accent pa-0">
+                  <v-spacer></v-spacer>
                   <v-btn 
-                    flat 
-                    class="blue--text darken-1" 
+                    raised 
+                    small
+                    icon
+                    class="accent elevation-0" 
                     v-tooltip:top="{html:'Show Maintenances'}" 
                     @click.native="selectVehicle(vehicle.key)">
-                    maintenances
+                    <v-icon>build</v-icon>
+                    
                   </v-btn>
-                  <v-spacer></v-spacer>
-                  <v-menu max-width="250" left>
+                  <v-dialog>
                     <v-btn 
                       icon 
                       slot="activator" 
@@ -107,14 +109,15 @@
                     </v-btn>
                     <v-card class="elevation-1">
                       <v-card-title class="title">Confirmation</v-card-title>
-                      <v-card-text>Are you sure you want to remove {{vehicle.model}} and its maintenances?
+                      <v-card-text>Are you sure you want to remove <b>{{vehicle.model}}</b> and its maintenances?
                       </v-card-text>
                       <v-card-actions>
+                        <v-spacer></v-spacer>
                         <v-btn flat class="blue--text">Cancel</v-btn>
                         <v-btn flat class="red--text" @click.native="deleteVehicle(vehicle.key)">Remove</v-btn>
                       </v-card-actions>
                     </v-card>
-                  </v-menu>
+                  </v-dialog>
                 </v-card-actions>
               </v-card>
             </v-flex>
@@ -149,6 +152,7 @@ export default {
       selectedimage: '',
       addvehiclecurrentstep: 1,
       addvehicledialog: false,
+      deleteVehicleDialog: false,
       imageselectiondialog: false,
       addvehicleloading: false,
       loginloading: false,
