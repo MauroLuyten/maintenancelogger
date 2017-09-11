@@ -3,8 +3,8 @@
     <v-layout justify-center>
       <v-flex xs12 md9 lg7 xl4 class="mt-3">
         <v-card id="vehicle_page_card">
-          <v-card-media :src="vehicle.imgurl" style="min-height: 600px" cover>
-            
+          <v-card-media>
+            <img :src="vehicle.imgurl" :alt="vehicle.model" style="height: 100%">
             <v-dialog v-model="addmaintenancedialog" width="350">
               <v-btn 
                 medium 
