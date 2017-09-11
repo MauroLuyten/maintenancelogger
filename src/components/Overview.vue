@@ -91,33 +91,18 @@
                 <v-card-actions class="grey lighten-2 pa-0">
                   <v-spacer></v-spacer>
                   <v-btn 
-                    raised 
-                    small
                     icon
                     class="elevation-0" 
                     v-tooltip:top="{html:'Show Maintenances'}" 
                     @click.native="selectVehicle(vehicle.key)">
                     <v-icon>build</v-icon>
-                    
                   </v-btn>
-                  <v-dialog>
-                    <v-btn 
+                  <v-btn 
                       icon 
-                      slot="activator" 
-                      v-tooltip:top="{html:'Remove Vehicle'}">
+                      v-tooltip:top="{html:'Remove Vehicle'}"
+                      @click="selectedVehicle = vehicle">
                       <v-icon>delete</v-icon>
                     </v-btn>
-                    <v-card class="elevation-1">
-                      <v-card-title class="title">Confirmation</v-card-title>
-                      <v-card-text>Are you sure you want to remove <b>{{vehicle.model}}</b> and its maintenances?
-                      </v-card-text>
-                      <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn flat class="blue--text" @click.self.prevent="true">Cancel</v-btn>
-                        <v-btn flat class="red--text" @click.native="deleteVehicle(vehicle.key)">Remove</v-btn>
-                      </v-card-actions>
-                    </v-card>
-                  </v-dialog>
                 </v-card-actions>
               </v-card>
             </v-flex>
@@ -128,6 +113,11 @@
             <p class="headline ma-1">You currently don't have any vehicles added.</p>
           </v-flex>
         </v-layout>
+        <deleteVehicleDialog 
+          :vehicle="selectedVehicle"
+          @cancelled="selectedVehicle = null" 
+          @confirmed="deleteVehicle(selectedVehicle.key)">
+        </deleteVehicleDialog>
       </v-flex>
     </v-layout>
     </v-flex>
@@ -141,6 +131,7 @@ import Axios from 'axios'
 export default {
   data() {
     return {
+      selectedVehicle: null,
       newVehicle: {
         model: '',
         maintenances: '0',
@@ -158,13 +149,16 @@ export default {
 
     }
   },
+  components: {
+    deleteVehicleDialog: require('@/components/dialogs/deleteVehicleDialog.vue')
+  },
   computed: {
     vehicles() {
       return this.$store.getters.getVehicles
     },
     user() {
       return this.$store.getters.getUser
-    }
+    },
   },
   methods: {
     selectVehicle: function(key) {
@@ -229,6 +223,7 @@ export default {
     },
     deleteVehicle: function(vehicleKey) {
       this.$store.dispatch('removeVehicle', {vehicleKey: vehicleKey})
+      this.selectedVehicle = null
     },
     clearForms: function() {
       this.newVehicle.model = ''

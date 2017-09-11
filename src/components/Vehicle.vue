@@ -99,7 +99,6 @@
                 </v-data-table>
                 <v-layout row justify-end style="border-top:1px solid rgba(0,0,0,0.24);background-color:white" class="ma-0">
                   <v-card-actions class="pa-0">
-
                     <v-menu max-width="250" left>
                       <v-btn icon slot="activator" class="pa-0" :disabled="!selected.length">
                         <v-icon>delete</v-icon>
