@@ -88,13 +88,13 @@
                 <v-card-title class="grey lighten-3">
                   <h2 class="title">{{vehicle.model}}</h2>
                 </v-card-title>
-                <v-card-actions class="accent pa-0">
+                <v-card-actions class="grey lighten-2 pa-0">
                   <v-spacer></v-spacer>
                   <v-btn 
                     raised 
                     small
                     icon
-                    class="accent elevation-0" 
+                    class="elevation-0" 
                     v-tooltip:top="{html:'Show Maintenances'}" 
                     @click.native="selectVehicle(vehicle.key)">
                     <v-icon>build</v-icon>
@@ -113,7 +113,7 @@
                       </v-card-text>
                       <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn flat class="blue--text">Cancel</v-btn>
+                        <v-btn flat class="blue--text" @click.self.prevent="true">Cancel</v-btn>
                         <v-btn flat class="red--text" @click.native="deleteVehicle(vehicle.key)">Remove</v-btn>
                       </v-card-actions>
                     </v-card>
@@ -147,7 +147,6 @@ export default {
         imgurl: ''
       },
       suggestedimages: [
-
       ],
       selectedimage: '',
       addvehiclecurrentstep: 1,
@@ -171,7 +170,6 @@ export default {
     selectVehicle: function(key) {
       this.$router.push({
         path: 'vehicle/' + key,
-
       })
     },
     showSuggestedImages: function() {
@@ -191,22 +189,20 @@ export default {
       var carouselcontrols = this.$refs.suggestedcarousel.$el.childNodes[2].childNodes
       //sets carousel control of selected image to a checkmark and makes sure other controls are back to default
       for (var i = 0; i < carouselcontrols.length; i++) {
-        i == index ? carouselcontrols[i].childNodes[0].childNodes[0].textContent = 'check' : carouselcontrols[i].childNodes[0].childNodes[0].textContent = 'fiber_manual_record'
-
+        i == index 
+        ? carouselcontrols[i].childNodes[0].childNodes[0].textContent = 'check' 
+        : carouselcontrols[i].childNodes[0].childNodes[0].textContent = 'fiber_manual_record'
       }
-
-
-
     },
     resetCarouselControls: function() {
       var carouselcontrols = this.$refs.suggestedcarousel.$el.childNodes[2].childNodes
       //sets carousel controls back to default
       for (var i = 0; i < carouselcontrols.length; i++) {
         carouselcontrols[i].childNodes[0].childNodes[0].textContent = 'fiber_manual_record'
-
       }
     },
     isSelectedImage: function(key) {
+      //returns badge object based on if the image is selected or not
       return this.selectedimage == key ? {
         value: 'check',
         icon: true,
@@ -222,7 +218,6 @@ export default {
         }
     },
     addVehicle: function() {
-
       if (this.newVehicle.model) {
         this.addvehicleloading = true
         this.newVehicle.imgurl = this.selectedimage
@@ -230,21 +225,15 @@ export default {
         this.clearForms()
         this.addvehicleloading = false
         this.closeDialogs()
-
       }
-
     },
     deleteVehicle: function(vehicleKey) {
       this.$store.dispatch('removeVehicle', {vehicleKey: vehicleKey})
-
     },
-
     clearForms: function() {
-
       this.newVehicle.model = ''
       this.newVehicle.maintenances = 0
       this.resetCarouselControls()
-
     },
     closeDialogs: function() {
       this.loginloading = false

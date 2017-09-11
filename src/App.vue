@@ -6,7 +6,7 @@
 
 <template>
   <v-app fixed-toolbar fill-height>
-    <v-navigation-drawer temporary v-model="sideNav">
+    <v-navigation-drawer persistent v-model="sideNav">
       <v-list>
         <v-list-tile v-for="item in AuthenticatedMenuItems" :key="item.title" :to="item.link" exact>
           <v-list-tile-action>
