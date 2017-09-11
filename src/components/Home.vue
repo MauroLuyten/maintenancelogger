@@ -20,9 +20,8 @@
                         <v-spacer></v-spacer>
                         <v-btn 
                           class="accent black--text" 
-                          to="/overview" 
-                          v-tooltip:bottom="{ html: 'Go to Overview' }">
-                            Overview
+                          to="/overview"> 
+                            Continue
                           </v-btn>
                     </v-card-actions>
                 </v-card>
