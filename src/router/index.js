@@ -1,9 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/components/Home'
-import Overview from '@/components/Overview'
-import Vehicle from '@/components/Vehicle'
-import Login from '@/components/Login'
+const Home = () => import('@/components/Home')
+// import Home from '@/components/Home'
+const Overview = () => import('@/components/Overview')
+// import Overview from '@/components/Overview'
+const Vehicle = () => import('@/components/Vehicle')
+//import Vehicle from '@/components/Vehicle'
+const Login = () => import('@/components/Login')
+//import Login from '@/components/Login'
 import AuthGuard from '@/router/auth-guard'
 
 Vue.use(Router)
