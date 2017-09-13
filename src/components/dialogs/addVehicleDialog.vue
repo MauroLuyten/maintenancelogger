@@ -19,7 +19,13 @@
         Add a vehicle
       </v-stepper-step>
       <v-stepper-content step="1">
-        <v-progress-linear indeterminate :active="loading"></v-progress-linear>
+        <v-progress-linear 
+          indeterminate 
+          :active="loading"
+          color-front="accent"
+          color-back="primary"
+          class="mb-0">
+        </v-progress-linear>
         <v-card class="elevation-0 ma-0">
           <v-card-title>
             <h2 class="headline">Add vehicle</h2>
