@@ -1,9 +1,9 @@
 <template>
-  <v-dialog v-model="dialog" v-if="dialog" lazy>
+  <v-dialog v-model="dialog" lazy>
     <v-card class="elevation-1">
       <v-card-title class="title">Confirmation</v-card-title>
-      <v-card-text>Are you sure you want to remove
-        <b>{{vehicle.model}}</b> and its maintenances?
+      <v-card-text>
+        <slot name="text"></slot>
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
@@ -19,7 +19,6 @@ export default {
   props: ['vehicle'],
   data () {
     return {
-      
     }
   },
   computed: {
@@ -30,6 +29,9 @@ export default {
       set(value) {
         this.$emit('cancelled')
       }
+    },
+    model () {
+      return this.dialog ? this.$props.vehicle.model : ''
     }
   },
   methods: {
