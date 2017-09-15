@@ -7,3 +7,6 @@ yarn-error.log*
 .vscode
 
 .jsbeautifyrc
+src/components/playground.vue
+json_data.json
+
