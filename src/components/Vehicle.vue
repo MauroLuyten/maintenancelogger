@@ -9,66 +9,70 @@
             :loading="loading"
             @confirmed="addMaintenance"
             >
-
             </addMaintenanceDialog>
           </v-card-media>
           <v-card-title class="grey lighten-3">
             <h3>{{vehicle.model}}</h3>
           </v-card-title>
+          <v-layout row class="pa-2" style="height:64px">
+            <transition name="fade-transition" mode="out-in">
+              <h5 
+                v-if="!selected.length" 
+                key="title"
+                class="datatable-title">
+                Maintenances
+              </h5>
+              <h6
+                v-else
+                key="select"
+                class="teal--text datatable-title">
+                {{selectedText}} selected
+              </h6>
+            </transition>
+            <v-spacer></v-spacer>
+            <transition name="fade-transition">
+              <v-btn 
+                v-if="selected.length"
+                icon
+                @click.native.stop="deleteItemDialog = true">
+                <v-icon>delete</v-icon>
+              </v-btn>
+            </transition>
+            <deleteItemDialog
+            :dialog="deleteItemDialog"
+            @confirmed="deleteMaintenances"
+            @cancelled="deleteItemDialog = false">
+              <p slot="text">
+                Are you sure you want to remove
+                <b>{{selectedText}}</b>?
+              </p>
+            </deleteItemDialog>
+          </v-layout>
+          <v-divider></v-divider>
           <v-card-text class="ma-0 pa-0">
-            <v-expansion-panel class="elevation-0 " expand>
-              <v-expansion-panel-content v-model="maintenancesExpanded">
-                <div slot="header" class="headline">Maintenances</div>
-                <v-data-table 
-                  v-model="selected" 
-                  :headers="maintenanceTable.headers" 
-                  :items="maintenances" 
-                  class="elevation-0 white" 
-                  selected-key="key" 
-                  no-data-text="No maintenances added" 
-                  hide-actions 
-                  select-all>
-                  <template slot="items" scope="props">
-                    <td>
-                      <v-checkbox 
-                        primary 
-                        hide-details 
-                        v-model="props.selected">
-                      </v-checkbox>
-                    </td>
-                    <td>{{props.item.date}}</td>
-                    <td>{{props.item.description}}</td>
-                    <td class="text-xs-right">{{props.item.kilometers}}</td>
-                    <td class="text-xs-right">{{props.item.cost}}</td>
-                  </template>
-                  <template slot="footer" v-if="selected.length">
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td class="text-xs-right">total: {{totalCost}}</td>
-                  </template>
-                </v-data-table>
-                <v-layout row justify-end style="border-top:1px solid rgba(0,0,0,0.24);background-color:white" class="ma-0">
-                  <v-card-actions class="pa-0">
-                    <v-menu max-width="250" left>
-                      <v-btn icon slot="activator" class="pa-0" :disabled="!selected.length">
-                        <v-icon>delete</v-icon>
-                      </v-btn>
-                      <v-card class="elevation-1">
-                        <v-card-title class="title">Confirmation</v-card-title>
-                        <v-card-text>Are you sure you want to remove {{selected.length}} maintenance(s)?
-                        </v-card-text>
-                        <v-card-actions>
-                          <v-btn flat class="blue--text">Cancel</v-btn>
-                          <v-btn flat class="red--text" @click.native="deleteMaintenances()">Remove</v-btn>
-                        </v-card-actions>
-                      </v-card>
-                    </v-menu>
-                  </v-card-actions>
-                </v-layout>
-              </v-expansion-panel-content>
-            </v-expansion-panel>
+            <v-data-table 
+              v-model="selected" 
+              :headers="maintenanceTable.headers" 
+              :items="maintenances" 
+              class="elevation-0 white" 
+              selected-key="key" 
+              no-data-text="No maintenances added" 
+              hide-actions 
+              select-all>
+              <template slot="items" scope="props">
+                <td>
+                  <v-checkbox 
+                    primary 
+                    hide-details 
+                    v-model="props.selected">
+                  </v-checkbox>
+                </td>
+                <td>{{props.item.date}}</td>
+                <td>{{props.item.description}}</td>
+                <td class="text-xs-right">{{props.item.kilometers}}</td>
+                <td class="text-xs-right">{{props.item.cost}}</td>
+              </template>
+            </v-data-table>
           </v-card-text>
         </v-card>
       </v-flex>
@@ -107,11 +111,12 @@ export default {
         kilometers: '',
         cost: ''
       },
-      maintenancesExpanded: true
+      deleteItemDialog: false
     }
   },
   components: {
-    addMaintenanceDialog: require('@/components/dialogs/addMaintenanceDialog.vue')
+    addMaintenanceDialog: require('@/components/dialogs/addMaintenanceDialog.vue'),
+    deleteItemDialog: require('@/components/dialogs/deleteItemDialog.vue')
   },
   computed: {
     user () {
@@ -132,6 +137,11 @@ export default {
         total += parseFloat(vehicle.cost)
       })
       return total
+    },
+    selectedText() {
+      return this.selected.length===1 
+      ? this.selected.length + ' maintenance' 
+      : this.selected.length + ' maintenances'
     }
   },
   methods: {
@@ -146,6 +156,8 @@ export default {
       if(maintenanceKeys.length){
         this.$store.dispatch('removeMaintenances', {vehicleKey: this.$props.vehicleKey, maintenanceKeys})
         this.selected = []
+        this.maintenanceKeys = []
+        this.deleteItemDialog = false
       }
     },
   }
