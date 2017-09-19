@@ -12,7 +12,7 @@
             </addMaintenanceDialog>
           </v-card-media>
           <v-card-title class="grey lighten-3">
-            <h3>{{vehicle.model}}</h3>
+            <h3>{{vehicleTitle(vehicle)}}</h3>
           </v-card-title>
           <v-layout row class="pa-2" style="height:64px">
             <transition name="fade-transition" mode="out-in">
@@ -142,9 +142,14 @@ export default {
       return this.selected.length===1 
       ? this.selected.length + ' maintenance' 
       : this.selected.length + ' maintenances'
-    }
+    },
   },
   methods: {
+    vehicleTitle(vehicle) {
+      return vehicle.make === undefined ?
+      vehicle.model : 
+      vehicle.make + ' ' + vehicle.model
+    },
     addMaintenance(newMaintenance) {
         this.$store.dispatch('addMaintenance', {vehicleKey: this.$props.vehicleKey,maintenance: newMaintenance })
     },

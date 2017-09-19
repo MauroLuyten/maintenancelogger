@@ -8,18 +8,21 @@
         <v-layout v-if="vehicles.length" row justify-start wrap>
           <template v-for="(vehicle,key) in vehicles">
             <v-flex lg4 xs12 sm6 md4  :key="vehicle.key">
-              <v-card class="white elevation-1 ma-1">
+              <v-card class="white ma-1" @click="selectVehicle(vehicle.key)" hover>
                 <v-card-media height="250" :src="vehicle.imgurl" cover>
                 </v-card-media>
                 <v-card-title class="grey lighten-3">
-                  <h2 class="title">{{vehicle.model}}</h2>
+                  <h2 class="title">
+                    {{vehicleTitle(vehicle)}}
+                  </h2>
                 </v-card-title>
                 <v-card-actions class="grey lighten-2 pa-0">
                   <v-spacer></v-spacer>
                   <v-btn 
                     icon
                     v-tooltip:top="{html:'Show Maintenances'}" 
-                    @click.native="selectVehicle(vehicle.key)">
+                    @click.stop="selectVehicle(vehicle.key)"
+                    class="hidden-md-and-up">
                     <v-icon>build</v-icon>
                   </v-btn>
                   <v-btn 
@@ -94,6 +97,11 @@ export default {
       this.$store.dispatch('removeVehicle', {vehicleKey: vehicleKey})
       this.selectedVehicle = null
     },
+    vehicleTitle(vehicle) {
+      return vehicle.make === undefined ?
+      vehicle.model : 
+      vehicle.make + ' ' + vehicle.model
+    }
   }
 }
 </script>
