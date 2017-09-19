@@ -31,12 +31,24 @@
             <h2 class="headline">Add vehicle</h2>
           </v-card-title>
           <v-card-text>
-            <v-text-field 
-              @keyup.enter="showSuggestedImages()" 
-              label="Vehicle Model" 
+            <v-select
+              v-model="newVehicle.make"
+              :items="vehicleMakes"
+              label="Make"
+              placeholder="eg. Honda" 
+              autocomplete
               required 
-              v-model="newVehicle.model">
-            </v-text-field>
+              >
+            </v-select>
+            <v-select
+              v-model="newVehicle.model"
+              :items="makeModels"
+              label="Model"
+              placeholder="eg. Civic" 
+              autocomplete
+              required 
+              >
+            </v-select>
           </v-card-text>
           <v-card-actions>
             <v-btn 
@@ -98,10 +110,12 @@
 </template>
 <script>
 import Axios from 'axios'
+import * as vehicleCatalog from '../../../vehicles.json'
   export default {
     data() {
       return {
         newVehicle: {
+          make: '',
           model: '',
           maintenances: '0',
           imgurl: ''
@@ -110,6 +124,17 @@ import Axios from 'axios'
         dialog: false,
         loading: false,
         currentStep: 1,
+        vehicleCatalog: vehicleCatalog
+      }
+    },
+    computed: {
+      vehicleMakes() {
+        return Object.keys(this.vehicleCatalog.makes)
+      },
+      makeModels() {
+        return this.newVehicle.make !== '' ?
+        Object.keys(this.vehicleCatalog.makes[this.newVehicle.make]).sort()
+        : []
       }
     },
     methods: {
@@ -120,7 +145,7 @@ import Axios from 'axios'
       showSuggestedImages() {
         if (this.newVehicle.model) {
           this.loading = true
-          Axios.get('https://www.googleapis.com/customsearch/v1?q=' + this.newVehicle.model +
+          Axios.get('https://www.googleapis.com/customsearch/v1?q=' + this.newVehicle.make + this.newVehicle.model +
             '&imgDominantColor=white&cx=000944192720465307300:qbm11spsnzw&searchType=image&key=AIzaSyBv9rRn3Zbjn0wYbdM6M6PXgrvnfHwvrm0&num=3&fields=items/link')
             .then(response => {
               this.suggestedImages = response.data.items
@@ -164,6 +189,7 @@ import Axios from 'axios'
       },
       closeDialog() {
         this.newVehicle = {
+          make: '',
           model: '',
           maintenances: '0',
           imgurl: ''
