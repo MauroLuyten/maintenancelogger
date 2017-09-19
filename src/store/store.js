@@ -135,6 +135,7 @@ export const store = new Vuex.Store({
     addVehicle ({commit, state}, payload) {
       const vehicle = {
         maintenances: payload.maintenances,
+        make: payload.make,
         model: payload.model,
         imgurl: payload.imgurl
       }
