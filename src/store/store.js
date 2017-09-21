@@ -60,7 +60,7 @@ export const store = new Vuex.Store({
           commit('setUser', newUser)
           dispatch('loadVehicles')
           commit('setLoading', false)
-          commit('setMessage', {context: 'success', text: 'Successfully logged into ' + payload.email, timeout: 4500})
+          commit('setMessage', {context: 'success', text: `Successfully logged into ${payload.email}`, timeout: 4500})
         },
       ).catch(
         error => {
@@ -87,7 +87,7 @@ export const store = new Vuex.Store({
           commit('setUser', newUser)
           commit('setLoading', false)
           commit('setMessage',
-          {context: 'succes', text: 'Successfully registered and logged into ' + payload.email, timeout: 4500})
+          {context: 'succes', text: `Successfully registered and logged into ${payload.email}`, timeout: 4500})
         }
       ).catch(
         error => {
@@ -102,7 +102,7 @@ export const store = new Vuex.Store({
         email: payload.email
       }
       commit('setUser', newUser)
-      commit('setMessage', {context: 'success', text: 'Automatically logged into ' + payload.email, timeout: 4500})
+      commit('setMessage', {context: 'success', text: `Automatically logged into ${payload.email}`, timeout: 4500})
       dispatch('loadVehicles')
     },
     loadVehicles ({commit, state}) {
@@ -144,7 +144,7 @@ export const store = new Vuex.Store({
         vehicle.key = data.key
         vehicle.maintenances = []
         commit('addVehicle', {vehicle: vehicle})
-        commit('setMessage', {context: 'success', text: 'Successfully added ' + vehicle.model, timeout: 4500})
+        commit('setMessage', {context: 'success', text: `Successfully added ${vehicle.make} ${vehicle.model}`, timeout: 4500})
       }).catch(error => {
         commit('setError', error)
       })
@@ -154,6 +154,7 @@ export const store = new Vuex.Store({
       firebase.database().ref('users/' + state.user.uid + '/vehicles/' + vehicleKey).remove()
       .then(data => {
         commit('removeVehicle', {vehicleKey: vehicleKey})
+        commit('setMessage', {context: 'success', text: 'Successfully removed vehicle', timeout: 4500})
       }).catch(error => {
         commit('setError', error)
       })
@@ -170,6 +171,7 @@ export const store = new Vuex.Store({
       .then(data => {
         maintenance.key = data.key
         commit('addMaintenance', {vehicleKey, maintenance})
+        commit('setMessage', {context: 'success', text: 'Successfully added maintenance', timeout: 4500})
       }).catch(error => {
         commit('setError', error)
       })
@@ -182,6 +184,7 @@ export const store = new Vuex.Store({
         .remove()
         .then(data => {
           commit('removeMaintenance', {vehicleKey, maintenanceKey})
+          commit('setMessage', {context: 'success', text: 'Successfully removed maintenance', timeout: 4500})          
         }).catch(error => {
           commit('setError', error)
         })
