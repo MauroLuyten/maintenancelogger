@@ -84,6 +84,7 @@
                 in suggestedImages" 
                 :src="item.link" 
                 :key="item.link" 
+                class="primary--text accent--after"
                 v-badge="isSelectedImage(item.link)" 
                 @click.native="selectImage(item.link, index)" 
                 style="cursor:pointer;">
