@@ -100,7 +100,7 @@
               class="accent" 
               raised 
               @click.native="addVehicle" 
-              :disabled="newVehicle.imgurl===''">
+              :disabled="!validMakeAndModel">
               Confirm</v-btn>
           </v-card-actions>
         </v-card>
@@ -135,6 +135,10 @@ import * as vehicleCatalog from '../../../vehicles.json'
         return this.newVehicle.make !== '' ?
         Object.keys(this.vehicleCatalog.makes[this.newVehicle.make]).sort()
         : []
+      },
+      validMakeAndModel() {
+        return this.newVehicle.make !== ''
+        && this.newVehicle.model !== ''
       }
     },
     methods: {
