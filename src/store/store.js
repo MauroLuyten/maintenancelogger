@@ -106,7 +106,7 @@ export const store = new Vuex.Store({
       dispatch('loadVehicles')
     },
     loadVehicles ({commit, state}) {
-      firebase.database().ref().child('users/' + state.user.uid + '/vehicles').once('value')
+      firebase.database().ref().child(`users/${state.user.uid}/vehicles/`).once('value')
       .then(snapshot => {
         const vehicles = []
         snapshot.forEach(item => {
@@ -139,7 +139,7 @@ export const store = new Vuex.Store({
         model: payload.model,
         imgurl: payload.imgurl
       }
-      firebase.database().ref('users/' + state.user.uid + '/vehicles').push(vehicle)
+      firebase.database().ref(`users/${state.user.uid}/vehicles/`).push(vehicle)
       .then(data => {
         vehicle.key = data.key
         vehicle.maintenances = []
@@ -151,7 +151,7 @@ export const store = new Vuex.Store({
     },
     removeVehicle ({commit, state}, payload) {
       let vehicleKey = payload.vehicleKey
-      firebase.database().ref('users/' + state.user.uid + '/vehicles/' + vehicleKey).remove()
+      firebase.database().ref(`users/${state.user.uid}/vehicles/${vehicleKey}`).remove()
       .then(data => {
         commit('removeVehicle', {vehicleKey: vehicleKey})
         commit('setMessage', {context: 'success', text: 'Successfully removed vehicle', timeout: 4500})
@@ -167,7 +167,7 @@ export const store = new Vuex.Store({
         kilometers: payload.maintenance.kilometers,
         cost: payload.maintenance.cost
       }
-      firebase.database().ref('users/' + state.user.uid + '/vehicles/' + vehicleKey + '/maintenances').push(maintenance)
+      firebase.database().ref(`users/${state.user.uid}/vehicles/${vehicleKey}/maintenances`).push(maintenance)
       .then(data => {
         maintenance.key = data.key
         commit('addMaintenance', {vehicleKey, maintenance})
@@ -180,7 +180,8 @@ export const store = new Vuex.Store({
       let vehicleKey = payload.vehicleKey
       let maintenanceKeys = payload.maintenanceKeys
       maintenanceKeys.forEach(maintenanceKey => {
-        firebase.database().ref('users/' + state.user.uid + '/vehicles/' + vehicleKey + '/maintenances/' + maintenanceKey)
+        
+        firebase.database().ref(`users/${state.user.uid}/vehicles/${vehicleKey}/maintenances/${maintenanceKey}`)
         .remove()
         .then(data => {
           commit('removeMaintenance', {vehicleKey, maintenanceKey})
