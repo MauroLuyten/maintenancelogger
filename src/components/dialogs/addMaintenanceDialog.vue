@@ -27,19 +27,20 @@
         </v-menu>
         <v-text-field 
           label="Description" 
-          append-icon="description" 
           v-model="newMaintenance.description" 
           multi-line 
           required>
         </v-text-field>
         <v-text-field 
-          label="Kilometers (km)" 
+          label="Kilometers"
+          suffix="km" 
           type="number" 
           v-model="newMaintenance.kilometers" 
           required>
         </v-text-field>
         <v-text-field 
-        label="Cost (€)" 
+        label="Cost" 
+        prefix="€"
         type="number" 
         v-model="newMaintenance.cost" 
         required>
