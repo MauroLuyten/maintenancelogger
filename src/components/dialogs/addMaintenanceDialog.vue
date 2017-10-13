@@ -4,8 +4,7 @@
       medium 
       fab  
       slot="activator" 
-      class="accent overlayed_fab" 
-      v-tooltip:top="{html:'Add a Maintenance'}">
+      class="accent overlayed_fab">
       <v-icon>add</v-icon>
     </v-btn>
     <v-card>

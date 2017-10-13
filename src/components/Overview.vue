@@ -18,19 +18,25 @@
                 </v-card-title>
                 <v-card-actions class="grey lighten-2 pa-0">
                   <v-spacer></v-spacer>
-                  <v-btn 
-                    icon
-                    v-tooltip:top="{html:'Show Maintenances'}" 
-                    @click.stop="selectVehicle(vehicle.key)"
-                    class="hidden-md-and-up">
-                    <v-icon>build</v-icon>
-                  </v-btn>
-                  <v-btn 
-                    icon 
-                    v-tooltip:top="{html:'Remove Vehicle'}"
-                    @click.stop="selectedVehicle = vehicle">
-                    <v-icon>delete</v-icon>
-                  </v-btn>
+                  <v-tooltip top>
+                      <v-btn 
+                        icon
+                        slot="activator"
+                        @click.stop="selectVehicle(vehicle.key)"
+                        class="hidden-md-and-up">
+                        <v-icon>build</v-icon>
+                      </v-btn>
+                      <span>Show Maintenances</span>
+                  </v-tooltip>
+                  <v-tooltip top>
+                      <v-btn 
+                        icon 
+                        slot="activator"
+                        @click.stop="selectedVehicle = vehicle">
+                        <v-icon>delete</v-icon>
+                      </v-btn>
+                      <span>Remove Vehicle</span>
+                  </v-tooltip>
                 </v-card-actions>
               </v-card>
             </v-flex>
