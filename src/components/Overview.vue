@@ -8,7 +8,7 @@
         <v-layout v-if="vehicles.length" row justify-start wrap>
           <template v-for="(vehicle,key) in vehicles">
             <v-flex lg4 xs12 sm6 md4  :key="vehicle.key">
-              <v-card class="white ma-1" @click="selectVehicle(vehicle.key)" hover>
+              <v-card class="white ma-1" @click.native="selectVehicle(vehicle.key)" hover>
                 <v-card-media height="250" :src="vehicle.imgurl" cover>
                 </v-card-media>
                 <v-card-title class="grey lighten-3">

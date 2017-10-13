@@ -55,7 +55,7 @@
               :headers="maintenanceTable.headers" 
               :items="maintenances" 
               class="elevation-0 white" 
-              selected-key="key" 
+              item-key="key" 
               no-data-text="No maintenances added" 
               hide-actions 
               select-all>

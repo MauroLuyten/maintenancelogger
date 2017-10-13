@@ -73,7 +73,7 @@
       return {
         newMaintenance: {
           description: '',
-          date: '',
+          date: null,
           kilometers: '',
           cost: ''
         },
@@ -96,7 +96,7 @@
         this.dialog = false
         this.newMaintenance = {
           description: '',
-          date: '',
+          date: null,
           kilometers: '',
           cost: ''
         }

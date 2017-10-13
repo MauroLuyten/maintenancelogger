@@ -5,8 +5,8 @@
 </style>
 
 <template>
-  <v-app fixed-toolbar fill-height>
-    <v-navigation-drawer temporary v-model="sideNav">
+  <v-app >
+    <v-navigation-drawer temporary v-model="sideNav" app>
       <v-list>
         <v-list-tile v-for="item in AuthenticatedMenuItems" :key="item.title" :to="item.link" exact>
           <v-list-tile-action>
@@ -22,7 +22,7 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar fixed class="primary" dark>
+    <v-toolbar fixed class="primary" dark app>
       <v-toolbar-side-icon @click.native.stop="sideNav=!sideNav"></v-toolbar-side-icon>
       <v-toolbar-title >
         <router-link to="/" tag="span" style="cursor: pointer">Maintenance Logger</router-link>
@@ -49,18 +49,20 @@
         </v-card>
       </v-menu>
     </v-toolbar>
-    <main class="grey lighten-3 elevation-0 pb-3">
-      <router-view></router-view>
-      <v-snackbar
-      :timeout="message.timeout"
-      :success="message.context === 'success'"
-      :info="message.context === 'info'"
-      :warning="message.context === 'warning'"
-      :error="message.context === 'error'"
-      v-model="message"
-    >{{message.text}}</v-snackbar>
+    <main class="grey lighten-3 elevation-0">
+      <v-content>
+          <router-view></router-view>
+          <v-snackbar
+          :timeout="message.timeout"
+          :success="message.context === 'success'"
+          :info="message.context === 'info'"
+          :warning="message.context === 'warning'"
+          :error="message.context === 'error'"
+          v-model="message"
+        >{{message.text}}</v-snackbar>
+      </v-content>
     </main>
-    <v-footer class="secondary white--text">
+    <v-footer class="secondary white--text" app>
       <span>&copy; Maintenance Logger 2017</span>
     </v-footer>
   </v-app>
