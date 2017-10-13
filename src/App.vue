@@ -49,9 +49,13 @@
         </v-card>
       </v-menu>
     </v-toolbar>
-    <main class="grey lighten-3 elevation-0">
+    <main class="grey lighten-3">
       <v-content>
-          <router-view></router-view>
+          <transition name="fade-transition" mode="out-in">
+              <router-view>
+                  
+              </router-view>
+          </transition>
           <v-snackbar
           :timeout="message.timeout"
           :success="message.context === 'success'"

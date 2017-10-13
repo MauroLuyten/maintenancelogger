@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import * as firebase from 'firebase'
+import router from '@/router/index.js'
 
 Vue.use(Vuex)
 
@@ -104,6 +105,7 @@ export const store = new Vuex.Store({
       commit('setUser', newUser)
       commit('setMessage', {context: 'success', text: `Automatically logged into ${payload.email}`, timeout: 4500})
       dispatch('loadVehicles')
+      this.router.push('/overview')
     },
     loadVehicles ({commit, state}) {
       firebase.database().ref().child(`users/${state.user.uid}/vehicles/`).once('value')
