@@ -2,6 +2,11 @@
 
 > A maintenance log built with Vue + Vuetify + Firebase
 
+# demo account
+
+email: demo@demo.com
+password: demodemo
+
 ## Build Setup
 
 ``` bash
