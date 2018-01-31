@@ -6,7 +6,7 @@
 
 <template>
   <v-app >
-    <v-navigation-drawer temporary v-model="sideNav" app>
+    <v-navigation-drawer temporary absolute v-model="sideNav">
       <v-list>
         <v-list-tile v-for="item in AuthenticatedMenuItems" :key="item.title" :to="item.link" exact>
           <v-list-tile-action>
@@ -49,23 +49,23 @@
         </v-card>
       </v-menu>
     </v-toolbar>
-    <main class="grey lighten-3">
       <v-content>
-          <transition name="fade-transition" mode="out-in">
-              <router-view>
-                  
-              </router-view>
-          </transition>
-          <v-snackbar
-          :timeout="message.timeout"
-          :success="message.context === 'success'"
-          :info="message.context === 'info'"
-          :warning="message.context === 'warning'"
-          :error="message.context === 'error'"
-          v-model="message"
-        >{{message.text}}</v-snackbar>
+          <v-container fluid>
+            <transition name="fade-transition" mode="out-in">
+                <router-view>
+                    
+                </router-view>
+            </transition>
+            <v-snackbar
+            :timeout="message.timeout"
+            :success="message.context === 'success'"
+            :info="message.context === 'info'"
+            :warning="message.context === 'warning'"
+            :error="message.context === 'error'"
+            v-model="message"
+            >{{message.text}}</v-snackbar>
+            </v-container>
       </v-content>
-    </main>
     <v-footer class="secondary white--text" app>
       <span>&copy; Maintenance Logger 2017</span>
     </v-footer>

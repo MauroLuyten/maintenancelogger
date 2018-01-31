@@ -8,36 +8,39 @@ import { store } from './store/store'
 import VueScrollTo from 'vue-scrollto'
 import VueAnalytics from 'vue-analytics'
 import * as firebase from 'firebase'
+import { firebaseConfig } from './firebaseconfig';
 
-Vue.use(Vuetify)
+Vue.use(Vuetify, {
+    theme: {
+        primary: '#37464f',
+        accent: '#fbc02d',
+        secondary: '#62727b',
+        error: '#FF5252',
+        info: '#2196F3',
+        success: '#4CAF50',
+        warning: '#FFC107'
+    }
+})
 Vue.use(VueFire)
 Vue.use(VueScrollTo)
 Vue.use(VueAnalytics, {
-  id: 'UA-103840909-1',
-  router
+    id: 'UA-103840909-1',
+    router
 })
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
-  router,
-  store: store,
-  render: h => h(App),
-  created () {
-    const config = {
-      apiKey: "AIzaSyDe-jSD6qqbpK_CZ1uAH3DWcPt8JDWuoGs",
-      authDomain: "maintenancelogger.firebaseapp.com",
-      databaseURL: "https://maintenancelogger.firebaseio.com",
-      projectId: "maintenancelogger",
-      storageBucket: "maintenancelogger.appspot.com",
-      messagingSenderId: "73510925424"
+    el: '#app',
+    router,
+    store: store,
+    render: h => h(App),
+    created() {
+        firebase.initializeApp(firebaseConfig)
+        firebase.auth().onAuthStateChanged(user => {
+            if (user && !this.$store.getters.getUser) {
+                this.$store.dispatch('autoLogin', user)
+            }
+        })
     }
-    firebase.initializeApp(config)
-    firebase.auth().onAuthStateChanged(user => {
-      if (user && !this.$store.getters.getUser) {
-        this.$store.dispatch('autoLogin', user)
-      }
-    })
-  }
 })
