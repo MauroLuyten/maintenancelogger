@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialog" lazy>
+  <v-dialog v-model="dialog" lazy width="400">
     <v-card class="elevation-1">
       <v-card-title class="title">Confirmation</v-card-title>
       <v-card-text>
