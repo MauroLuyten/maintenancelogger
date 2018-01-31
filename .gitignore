@@ -9,4 +9,4 @@ yarn-error.log*
 .jsbeautifyrc
 src/components/playground.vue
 json_data.json
-
+firebaseconfig.js
