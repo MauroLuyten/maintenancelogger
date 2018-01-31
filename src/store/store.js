@@ -202,7 +202,6 @@ export const store = new Vuex.Store({
       }
     },
     removeAllMaintenances({commit, state}, payload){
-        console.log(payload)
         const vehicleKey = payload.vehicleKey
         let vehicleRef = firebase.database().ref(`users/${state.user.uid}/vehicles/${vehicleKey}`)
         vehicleRef.update({maintenances: 0})
