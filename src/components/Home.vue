@@ -1,5 +1,5 @@
 <template>
-    <v-container fluid class="pl-2 pr-2 pt-2">
+    <v-container fluid class="pl-1 pr-1 pt-2">
        <v-layout justify-center>
            <v-flex xs12 sm10 md7 lg6 xl4 class="mt-3">
                 <v-card>

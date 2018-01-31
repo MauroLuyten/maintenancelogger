@@ -49,7 +49,7 @@
         <v-layout row justify-space-between>
           <v-spacer></v-spacer>
           <v-btn 
-            class="primary--text accent" 
+            class="white--text secondary" 
             flat 
             @click.native="cancel()">
             Cancel

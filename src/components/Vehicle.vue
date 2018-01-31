@@ -12,22 +12,22 @@
             </addMaintenanceDialog>
           </v-card-media>
           <v-card-title class="grey lighten-3">
-            <h3>{{vehicleTitle(vehicle)}}</h3>
+            <h2>{{vehicleTitle(vehicle)}}</h2>
           </v-card-title>
           <v-layout row class="pa-2" style="height:64px">
             <transition name="fade-transition" mode="out-in">
-              <h5 
+              <h3 
                 v-if="!selected.length" 
                 key="title"
                 class="datatable-title">
                 Maintenances
-              </h5>
-              <h6
+              </h3>
+              <h3
                 v-else
                 key="select"
                 class="teal--text datatable-title">
                 {{selectedText}} selected
-              </h6>
+              </h3>
             </transition>
             <v-spacer></v-spacer>
             <transition name="fade-transition">
@@ -59,7 +59,7 @@
               no-data-text="No maintenances added" 
               hide-actions 
               select-all>
-              <template slot="items" scope="props">
+              <template slot="items" slot-scope="props">
                 <td>
                   <v-checkbox 
                     primary 

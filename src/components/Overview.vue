@@ -85,7 +85,7 @@ export default {
       return this.$store.getters.getUser
     },
     selectedModel() {
-      return this.selectedVehicle===null? '' : this.selectedVehicle.model
+      return this.selectedVehicle===null? '' : `${this.selectedVehicle.make} ${this.selectedVehicle.model}`
     }
   },
   methods: {
