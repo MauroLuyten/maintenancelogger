@@ -46,7 +46,11 @@ export const store = new Vuex.Store({
       state.vehicles.find(vehicle => vehicle.key === payload.vehicleKey).maintenances =
       state.vehicles.find(vehicle => vehicle.key === payload.vehicleKey).maintenances
       .filter(maintenance => maintenance.key !== payload.maintenanceKey)
-    }
+    },
+    removeAllMaintenances (state, payload) {
+        state.vehicles.find(vehicle => vehicle.key === payload.vehicleKey)
+        .maintenances = []
+      }
   },
   actions: {
     loginUser ({commit, dispatch}, payload) {
@@ -178,21 +182,38 @@ export const store = new Vuex.Store({
         commit('setError', error)
       })
     },
-    removeMaintenances ({commit, state}, payload) {
+    removeMaintenances ({commit, state, getters, dispatch}, payload) {
       let vehicleKey = payload.vehicleKey
       let maintenanceKeys = payload.maintenanceKeys
-      maintenanceKeys.forEach(maintenanceKey => {
-        
-        firebase.database().ref(`users/${state.user.uid}/vehicles/${vehicleKey}/maintenances/${maintenanceKey}`)
-        .remove()
-        .then(data => {
-          commit('removeMaintenance', {vehicleKey, maintenanceKey})
-          commit('setMessage', {context: 'success', text: 'Successfully removed maintenance', timeout: 4500})          
+      if(maintenanceKeys.length===getters.getVehicle(vehicleKey).maintenances.length){
+          dispatch('removeAllMaintenances', {vehicleKey: vehicleKey})
+      }else{
+          maintenanceKeys.forEach(maintenanceKey => { 
+            firebase.database().ref(`users/${state.user.uid}/vehicles/${vehicleKey}/maintenances/${maintenanceKey}`)
+            .remove()
+            .then(data => {
+              commit('removeMaintenance', {vehicleKey, maintenanceKey})
+              commit('setMessage', {context: 'success', text: 'Successfully removed maintenance', timeout: 4500})          
+            }).catch(error => {
+              commit('setError', error)
+            })
+          }
+          )
+      }
+    },
+    removeAllMaintenances({commit, state}, payload){
+        console.log(payload)
+        const vehicleKey = payload.vehicleKey
+        let vehicleRef = firebase.database().ref(`users/${state.user.uid}/vehicles/${vehicleKey}`)
+        vehicleRef.update({maintenances: 0})
+        .then(data=>{
+            commit('removeAllMaintenances', {vehicleKey: vehicleKey})
+            commit('setMessage', {context: 'success', text: 'Successfully removed maintenance', timeout: 4500})          
         }).catch(error => {
           commit('setError', error)
         })
-      }
-      )
+
+
     },
     clearError ({commit, state}) {
       commit('setError', null)
