@@ -39,8 +39,8 @@
                   v-model="newVehicle.make"
                   :items="vehicleMakes"
                   label="Make"
-                  placeholder="eg. Honda" 
-                  autocomplete
+                  placeholder="eg. Honda"
+                  combobox 
                   required 
                   >
                 </v-select>
@@ -49,14 +49,14 @@
                   :items="makeModels"
                   label="Model"
                   placeholder="eg. Civic" 
-                  autocomplete
+                  combobox
                   required 
                   >
                 </v-select>
               </v-card-text>
               <v-card-actions>
                 <v-btn 
-                  class="primary--text accent" 
+                  class="white--text secondary" 
                   flat 
                   @click.native="dialog=false">
                   Close
@@ -139,7 +139,7 @@ import * as vehicleCatalog from '../../../vehicles.json'
       },
       makeModels() {
         return this.newVehicle.make !== '' ?
-        Object.keys(this.vehicleCatalog.makes[this.newVehicle.make]).sort()
+        Object.keys(this.vehicleCatalog.makes[this.newVehicle.make.toUpperCase()]).sort()
         : []
       },
       validMakeAndModel() {
