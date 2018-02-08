@@ -30,13 +30,25 @@
           multi-line 
           required>
         </v-text-field>
-        <v-text-field 
-          label="Kilometers"
-          suffix="km" 
-          type="number" 
-          v-model="newMaintenance.kilometers" 
-          required>
-        </v-text-field>
+        <v-layout>
+            <v-text-field 
+            :label=distanceName
+            type="number" 
+            v-model="newMaintenance.kilometers" 
+            required>
+            </v-text-field>
+            <v-flex xs3>
+
+            <v-select
+            :items="distances"
+            v-model="selectedDistance"
+            label="Distance"
+            single-line
+            bottom
+            >
+            </v-select>
+            </v-flex>
+        </v-layout>
         <v-layout>
             <v-text-field 
             label="Cost" 
@@ -107,6 +119,20 @@
     },
     getCurrencySymbol () {
         return this.$store.getters.getSymbolFromCurrency
+    },
+    distances() {
+        return this.$store.getters.getDistanceNames
+    },
+    distanceName(){
+        return this.$store.getters.getDistanceName
+    },
+    selectedDistance: {
+        get() {
+            return this.$store.getters.getSelectedDistance
+        },
+        set(value) {
+            this.$store.dispatch('setSelectedDistance', {selectedDistance:value})
+        }
     },
     selectedCurrency: {
         get() {

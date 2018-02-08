@@ -10,7 +10,18 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
     state: {
         user: null,
-        selectedCurrency: 'EUR',
+        selectedCurrency: 'EUR', 
+        selectedDistance: 'km',
+        distances: {
+            'km':{
+                name: 'Kilometers',
+                rate: 1.00
+            },
+            'mi': {
+                name: 'Miles',
+                rate: 0.621371
+            }
+        },
         currencies: {null:null}, 
         vehicles: [],
         error: null,
@@ -60,9 +71,18 @@ export const store = new Vuex.Store({
         },
         setCurrencies(state, payload) {
             state.currencies = payload.currencies
+        },
+        setSelectedDistance(state, payload) {
+            state.selectedDistance = payload.selectedDistance
         }
     },
     actions: {
+        init({dispatch}){
+            dispatch('loadVehicles')
+            dispatch('loadCurrencies')
+            dispatch('loadSelectedCurrency')
+            dispatch('loadSelectedDistance')
+        },
         loginUser({ commit, dispatch }, payload) {
             commit('setLoading', true)
             firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
@@ -73,8 +93,7 @@ export const store = new Vuex.Store({
                         email: user.email
                     }
                     commit('setUser', newUser)
-                    dispatch('loadVehicles')
-                    dispatch('loadCurrencies')
+                    dispatch('init')
                     commit('setLoading', false)
                     commit('setMessage', { context: 'success', text: `Successfully logged into ${payload.email}`, timeout: 4500 })
                 },
@@ -102,7 +121,7 @@ export const store = new Vuex.Store({
                     }
                     commit('setUser', newUser)
                     commit('setLoading', false)
-                    dispatch('loadCurrencies')
+                    dispatch('init')
                     commit('setMessage',
                         { context: 'succes', text: `Successfully registered and logged into ${payload.email}`, timeout: 4500 })
                 }
@@ -120,8 +139,7 @@ export const store = new Vuex.Store({
             }
             commit('setUser', newUser)
             commit('setMessage', { context: 'success', text: `Automatically logged into ${payload.email}`, timeout: 4500 })
-            dispatch('loadVehicles')
-            dispatch('loadCurrencies')
+            dispatch('init')
             router.push('/overview')
         },
         loadVehicles({ commit, state }) {
@@ -163,8 +181,6 @@ export const store = new Vuex.Store({
                 })
                 currencies['EUR'] = {name:'EUR', rate:1.00}
                 commit('setCurrencies', {currencies: currencies})
-                dispatch('loadSelectedCurrency')
-                
             })
             .catch(
                 error => {
@@ -179,7 +195,7 @@ export const store = new Vuex.Store({
             .then(snapshot => {
                 commit('setSelectedCurrency', {selectedCurrency: snapshot.val()})
             })
-            .catch(error=> {
+            .catch(error => {
                 commit('setError', error.message)
             })
         },
@@ -188,6 +204,28 @@ export const store = new Vuex.Store({
             .set(payload.selectedCurrency)
             .then(data => {
                 commit('setSelectedCurrency', payload)
+            })
+            .catch(error => {
+                commit('setError', error.message)
+            })
+        },
+        loadSelectedDistance({commit, state}){
+            firebase
+            .database()
+            .ref(`users/${state.user.uid}/preferences/selectedDistance`)
+            .once('value')
+            .then(snapshot => {
+                commit('setSelectedDistance', {selectedDistance: snapshot.val()})
+            })
+            .catch(error => {
+                commit('setError', error.message)
+            })
+        },
+        setSelectedDistance({commit, state}, payload) {
+            firebase.database().ref(`users/${state.user.uid}/preferences/selectedDistance`)
+            .set(payload.selectedDistance)
+            .then(data => {
+                commit('setSelectedDistance', payload)
             })
             .catch(error => {
                 commit('setError', error.message)
@@ -229,6 +267,7 @@ export const store = new Vuex.Store({
                 cost: payload.maintenance.cost
             }
             maintenance.cost = maintenance.cost/getters.getRateFromCurrency
+            maintenance.kilometers = maintenance.kilometers/getters.getRateFromDistance
             firebase.database().ref(`users/${state.user.uid}/vehicles/${vehicleKey}/maintenances`).push(maintenance)
                 .then(data => {
                     maintenance.key = data.key
@@ -311,6 +350,21 @@ export const store = new Vuex.Store({
         },
         getAmountFromCurrency: (state, getters) => (amount) => {
             return (amount*getters.getRateFromCurrency).toFixed(2)
+        },
+        getSelectedDistance(state) {
+            return state.selectedDistance
+        },
+        getDistanceConverted: (state) => (distance) => {
+            return (distance * state.distances[state.selectedDistance].rate).toFixed(2)
+        },
+        getDistanceNames(state) {
+            return Object.keys(state.distances).sort()
+        },
+        getDistanceName (state) {
+            return state.distances[state.selectedDistance].name
+        },
+        getRateFromDistance (state) {
+            return state.distances[state.selectedDistance].rate
         }
     },
 

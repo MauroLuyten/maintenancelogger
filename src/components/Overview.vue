@@ -6,7 +6,7 @@
           <h1 class="display-1 ma-1">Your Vehicles</h1>
         </v-layout>
         <v-layout v-if="vehicles.length" row justify-start wrap>
-          <template v-for="(vehicle,key) in vehicles">
+          <template v-for="(vehicle) in vehicles">
             <v-flex lg4 xs12 sm6 md4  :key="vehicle.key">
               <v-card class="white ma-1" @click.native="selectVehicle(vehicle.key)" hover>
                 <v-card-media height="250" :src="vehicle.imgurl" cover>
@@ -60,8 +60,6 @@
           </p>
         </deleteVehicleDialog>
       </v-flex>
-    </v-layout>
-    </v-flex>
     </v-layout>
   </v-container>
 </template>

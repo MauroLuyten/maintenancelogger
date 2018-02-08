@@ -58,6 +58,15 @@
             bottom>
             </v-select>
           </v-flex>
+          <v-flex xs8>
+            <v-select
+            :items="distances"
+            v-model="selectedDistance"
+            label = "Distance"
+            single-line
+            bottom>
+            </v-select>
+          </v-flex>
           </v-card-text>
           
           <v-card-actions>
@@ -131,6 +140,17 @@ export default {
     },
     currencies() {
         return this.$store.getters.getCurrencyNames
+    },
+    distances() {
+        return this.$store.getters.getDistanceNames
+    },
+    selectedDistance: {
+        get() {
+            return this.$store.getters.getSelectedDistance
+        },
+        set(value) {
+            this.$store.dispatch('setSelectedDistance', {selectedDistance:value})
+        }
     },
     selectedCurrency: {
         get() {

@@ -69,7 +69,7 @@
                 </td>
                 <td>{{props.item.date}}</td>
                 <td>{{props.item.description}}</td>
-                <td class="text-xs-right">{{props.item.kilometers}}</td>
+                <td class="text-xs-right">{{distanceText(props.item.kilometers)}}</td>
                 <td class="text-xs-right">{{amountText(props.item.cost)}}</td>
               </template>
             </v-data-table>
@@ -126,7 +126,7 @@ export default {
             value: 'description',
             align: 'left'
           }, {
-            text: 'Kilometers',
+            text: `${this.$store.getters.getDistanceName}` ,
             value: 'kilometers',
             align: 'right'
           }, {
@@ -158,6 +158,9 @@ export default {
     },
     amountText(amount) {
         return `${this.$store.getters.getSymbolFromCurrency} ${this.$store.getters.getAmountFromCurrency(amount)}`
+    },
+    distanceText(distance){
+        return `${this.$store.getters.getDistanceConverted(distance)} ${this.$store.getters.getSelectedDistance}`
     },
     addMaintenance(newMaintenance) {
         this.$store.dispatch('addMaintenance', {vehicleKey: this.$props.vehicleKey,maintenance: newMaintenance })
