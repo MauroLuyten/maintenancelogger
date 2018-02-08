@@ -1,7 +1,7 @@
 <template>
-  <v-container fluid class="pl-2 pr-2 pt-2">
+  <v-container fluid class="pl-0 pr-0 pt-0">
     <v-layout justify-center>
-      <v-flex xs12 md9 lg7 xl4 class="mt-3">
+      <v-flex xs12 md9 lg7 xl4 class="mt-1">
         <v-card id="vehicle_page_card">
           <v-card-media>
             <img :src="vehicle.imgurl" :alt="vehicle.model" style="height: 100%">
@@ -70,7 +70,7 @@
                 <td>{{props.item.date}}</td>
                 <td>{{props.item.description}}</td>
                 <td class="text-xs-right">{{props.item.kilometers}}</td>
-                <td class="text-xs-right">{{props.item.cost}}</td>
+                <td class="text-xs-right">{{amountText(props.item.cost)}}</td>
               </template>
             </v-data-table>
           </v-card-text>
@@ -84,26 +84,6 @@ export default {
   props: ['vehicleKey'],
   data() {
     return {
-      maintenanceTable: {
-        headers: [
-          {
-            text: 'Date',
-            value: 'date',
-            align: 'left'
-          }, {
-            text: 'Description',
-            value: 'description',
-            align: 'left'
-          }, {
-            text: 'Kilometers',
-            value: 'kilometers',
-            align: 'right'
-          }, {
-            text: 'Cost',
-            value: 'cost',
-            align: 'right'
-          },]
-      },
       selected: [],
       editMaintenance: {
         description: '',
@@ -125,11 +105,36 @@ export default {
     vehicle () {
       return this.$store.getters.getVehicle(this.$props.vehicleKey)
     },
+    currencyName() {
+        this.$store.getters.getSelectedCurrency
+    },
     maintenances () {
       return this.vehicle.maintenances
     },
     loading () {
       return this.$store.getters.getLoading
+    },
+    maintenanceTable() {
+        return {
+            headers: [
+          {
+            text: 'Date',
+            value: 'date',
+            align: 'left'
+          }, {
+            text: 'Description',
+            value: 'description',
+            align: 'left'
+          }, {
+            text: 'Kilometers',
+            value: 'kilometers',
+            align: 'right'
+          }, {
+            text: `Cost (${this.$store.getters.getSelectedCurrency})`,
+            value: 'cost',
+            align: 'right'
+          },]
+        }
     },
     totalCost () {
       let total = 0
@@ -143,12 +148,16 @@ export default {
       ? this.selected.length + ' maintenance' 
       : this.selected.length + ' maintenances'
     },
+    
   },
   methods: {
     vehicleTitle(vehicle) {
       return vehicle.make === undefined ?
       vehicle.model : 
       vehicle.make + ' ' + vehicle.model
+    },
+    amountText(amount) {
+        return `${this.$store.getters.getSymbolFromCurrency} ${this.$store.getters.getAmountFromCurrency(amount)}`
     },
     addMaintenance(newMaintenance) {
         this.$store.dispatch('addMaintenance', {vehicleKey: this.$props.vehicleKey,maintenance: newMaintenance })

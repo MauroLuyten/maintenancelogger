@@ -37,13 +37,26 @@
           v-model="newMaintenance.kilometers" 
           required>
         </v-text-field>
-        <v-text-field 
-        label="Cost" 
-        prefix="€"
-        type="number" 
-        v-model="newMaintenance.cost" 
-        required>
-        </v-text-field>
+        <v-layout>
+            <v-text-field 
+            label="Cost" 
+            :prefix=getCurrencySymbol
+            type="number" 
+            v-model="newMaintenance.cost" 
+            required>
+            </v-text-field>
+            <v-flex xs3>
+
+            <v-select
+            :items="currencies"
+            v-model="selectedCurrency"
+            label = "Currency"
+            single-line
+            bottom
+            >
+            </v-select>
+            </v-flex>
+        </v-layout>
       </v-card-text>
       <v-card-actions>
         <v-layout row justify-space-between>
@@ -74,7 +87,7 @@
           description: '',
           date: null,
           kilometers: '',
-          cost: ''
+          cost: '',
         },
         dialog: false
       }
@@ -88,7 +101,21 @@
       },
       loading () {
         return this.$store.getters.getLoading
-      }
+      },
+      currencies() {
+        return this.$store.getters.getCurrencyNames
+    },
+    getCurrencySymbol () {
+        return this.$store.getters.getSymbolFromCurrency
+    },
+    selectedCurrency: {
+        get() {
+            return this.$store.getters.getSelectedCurrency
+        },
+        set(value) {
+            this.$store.dispatch('setSelectedCurrency', {selectedCurrency:value})
+        }
+    }
     },
     methods: {
       cancel() {

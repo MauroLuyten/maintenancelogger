@@ -34,14 +34,32 @@
           {{item.title}}
         </v-btn>
       </v-toolbar-items>
-      <v-menu left offset-y class="mr-0" v-if="isAuthenticated" id="accountmenu">
+      <v-menu 
+        left 
+        offset-y 
+        class="mr-0" 
+        v-if="isAuthenticated" 
+        id="accountmenu"
+        :close-on-content-click="false">
         <v-btn flat :icon="xsOnly" slot="activator">
           <v-icon :left="!xsOnly" dark>account_circle</v-icon>
           <div class="hidden-xs-only ma-0 pa-0">Account</div>
         </v-btn>
         <v-card style="width:276px">
           <v-card-title class="title">Your account</v-card-title>
-          <v-card-text>{{user.email}}</v-card-text>
+          <v-card-text>
+              {{user.email}}
+          <v-flex xs8>
+            <v-select
+            :items="currencies"
+            v-model="selectedCurrency"
+            label = "Currency"
+            single-line
+            bottom>
+            </v-select>
+          </v-flex>
+          </v-card-text>
+          
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn dark class="red" @click.native="logout">Logout</v-btn>
@@ -110,6 +128,17 @@ export default {
         })
       }
       return items
+    },
+    currencies() {
+        return this.$store.getters.getCurrencyNames
+    },
+    selectedCurrency: {
+        get() {
+            return this.$store.getters.getSelectedCurrency
+        },
+        set(value) {
+            this.$store.dispatch('setSelectedCurrency', {selectedCurrency:value})
+        }
     },
     xsOnly: function() {
       return window.matchMedia("(max-width:600px)").matches
