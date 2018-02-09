@@ -193,7 +193,10 @@ export const store = new Vuex.Store({
             .ref(`users/${state.user.uid}/preferences/selectedCurrency`)
             .once('value')
             .then(snapshot => {
-                commit('setSelectedCurrency', {selectedCurrency: snapshot.val()})
+                if(snapshot.val()!==null){
+                    commit('setSelectedCurrency', {selectedCurrency: snapshot.val()})
+                    console.log(snapshot.val())
+                }
             })
             .catch(error => {
                 commit('setError', error.message)
@@ -215,7 +218,9 @@ export const store = new Vuex.Store({
             .ref(`users/${state.user.uid}/preferences/selectedDistance`)
             .once('value')
             .then(snapshot => {
-                commit('setSelectedDistance', {selectedDistance: snapshot.val()})
+                if(snapshot.val()!==null){
+                    commit('setSelectedDistance', {selectedDistance: snapshot.val()})
+                }
             })
             .catch(error => {
                 commit('setError', error.message)
