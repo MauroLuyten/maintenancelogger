@@ -86,8 +86,8 @@
 export default {
   data() {
     return {
-      email: '',
-      password: '',
+      email: 'demo@demo.com',
+      password: 'demodemo',
       password2: '',
       authmode: 'login',
       hints: {
