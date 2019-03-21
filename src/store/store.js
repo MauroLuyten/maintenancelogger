@@ -78,10 +78,10 @@ export const store = new Vuex.Store({
     },
     actions: {
         init({dispatch}){
-            dispatch('loadVehicles')
             dispatch('loadCurrencies')
             dispatch('loadSelectedCurrency')
             dispatch('loadSelectedDistance')
+            dispatch('loadVehicles')
         },
         loginUser({ commit, dispatch }, payload) {
             commit('setLoading', true)
@@ -168,8 +168,8 @@ export const store = new Vuex.Store({
                     commit('setError', error.message)
                 })
         },
-        loadCurrencies({ commit, state, dispatch}) {
-            Axios.get('https://api.fixer.io/latest')
+        loadCurrencies({commit, state, dispatch}) {
+            Axios.get('https://api.exchangeratesapi.io/latest')
             .then(response => {
                 let currencies = {}
                 Object.keys(response.data.rates).forEach(key=>{
@@ -195,7 +195,6 @@ export const store = new Vuex.Store({
             .then(snapshot => {
                 if(snapshot.val()!==null){
                     commit('setSelectedCurrency', {selectedCurrency: snapshot.val()})
-                    console.log(snapshot.val())
                 }
             })
             .catch(error => {
