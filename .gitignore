@@ -10,3 +10,4 @@ yarn-error.log*
 src/components/playground.vue
 json_data.json
 firebaseconfig.js
+*.cache
