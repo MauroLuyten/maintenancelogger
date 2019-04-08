@@ -1,8 +1,9 @@
 {
   "name": "Maintenance Logger",
-  "short_name": "Maintenance Log",
+  "short_name": "Maintenances",
   "description": "Maintenancelogger is a free online log for all your vehicle maintenances. Create an account and add the vehicles you want to track!",
   "lang": "en-US",
+  "start_url": "../index.html",
     "icons": [
         {
             "src": "/static/android-chrome-192x192.png",
