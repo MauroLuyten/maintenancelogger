@@ -94,7 +94,7 @@
             </v-container>
       </v-content>
     <v-footer class="secondary white--text" app>
-      <span>&copy; Maintenance Logger 2017</span>
+      <span>&copy; Maintenance Logger 2019</span>
     </v-footer>
   </v-app>
 </template>
